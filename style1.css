@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#orange-shape {
+    background-color: orange;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#image-container {
+    display: flex;
+    align-items: center;
+}
+
+#image-container img {
+    max-height: 40px; /* Set the image height to (height of the shape - 10px) */
+    max-width: 40px;
+}
+
+#menu {
+    display: flex;
+}
+
+#drag-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+#drag-image {
+    width: 200px;
+    height: 200px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: dashed
+}
+
+#drag-image p {
+    margin: 0;
+}
+
+/* ... Other CSS styles ... */
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 5px; /* Add some padding to each menu item */
+}
+.menu-item .black-shape:hover {
+    color: #000;
+    background-color: #ccc;
+}
+.black-shape {
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px; /* Add rounded corners to the black shapes */
+}
+
+.menu-item span {
+    color: white;
+    margin: 0;
+}
+/* ... Other CSS styles ... */
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 5px; /* Add some padding to each menu item */
+}
+
+.black-shape {
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px; /* Add rounded corners to the black shapes */
+    margin-left: 10px; /* Add left margin to the black shapes */
+
+}
+
+.menu-item span {
+    color: white;
+    margin: 0;
+}
+
+/* ... Other CSS styles ... */
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 5px; /* Add some padding to each menu item */
+}
+
+.black-shape {
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px; /* Add rounded corners to the black shapes */
+    margin-left: 10px; /* Add left margin to most black shapes */
+}
+
+/* Style the "Sign In" black shape separately */
+.sign-in {
+    margin-left: 20px; /* Add a larger left margin to the "Sign In" shape */
+}
+
+.menu-item span {
+    color: white;
+    margin: 0;
+}
