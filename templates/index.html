@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Detection</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Fire Detection</h1>
+    </div>
+
+    <!-- Add a drop zone for drag-and-drop -->
+    <div class="drop-zone" id="dropZone">
+        <p>Drag & Drop an image here or click to select</p>
+    </div>
+
+    <!-- Input file element for fallback -->
+    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+
+    <!-- Image containers initially hidden -->
+    <div class="image-container" id="originalImageContainer" style="display: none;">
+        <h2>Original Image</h2>
+        <img id="originalImage" src="#" alt="Original Image">
+    </div>
+    <div class="image-container" id="grayscaleImageContainer" style="display: none;">
+        <h2>Grayscale Image</h2>
+        <img id="grayscaleImage" src="#" alt="Grayscale Image">
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
