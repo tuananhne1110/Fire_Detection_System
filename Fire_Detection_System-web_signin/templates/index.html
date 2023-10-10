@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block additional_css %}
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+{% block content %}
+<!-- <div class="header">
+    <h1>Fire Detection</h1>
+</div> -->
+<!--Intro words-->
+<div class="center-container">
+    <p class="introWords">Fire Detect Demo</p>
+    <p class="introWords1">Detect where is the fire in your image/video that you provide us</p>
+</div>
+<!-- Add a drop zone for drag-and-drop -->
+<div class="container">
+    <div class="drop-zone" id="dropZone">
+        <p>Drag & Drop an image here or click to select</p>
+    </div>
+</div>
+
+<!-- Input file element for fallback -->
+<input type="file" id="fileInput" accept="image/*" style="display: none;">
+
+<!-- Image containers initially hidden -->
+<div class="image-container" id="originalImageContainer" style="display: none;">
+    <h2>Original Image</h2>
+    <div class="image-wrapper">
+        <img id="originalImage" src="#" alt="Original Image">
+    </div>
+</div>
+<!-- <div class="image-container" id="grayscaleImageContainer" style="display: none;">
+    <h2>Fire Detect</h2>
+    <img id="grayscaleImage" src="#" alt="Grayscale Image">
+</div> -->
+
+<script src="{{ url_for('static', filename='demo_script.js') }}"></script>
+{% endblock %}

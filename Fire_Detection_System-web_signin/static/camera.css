@@ -1,0 +1,16 @@
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 30vh;
+}
+
+.introWords, .introWords1 {
+    color: azure;
+    font-size: 30px;
+    text-align: center;
+}
+.introWords {
+    font-size: 50px;
+}

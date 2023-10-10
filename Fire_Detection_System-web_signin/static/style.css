@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    /* font-family: Arial, sans-serif; */
+    text-align: left;
+
+}
+
+/* .header {
+    background-color: orange;
+    padding-left: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: left; /* Align the text to the left 
+    
+} */
+
+.container {
+    width: 50%; /* Set the width of the container */
+    height: 20wh;
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px; /* Add some padding for spacing */
+    background-color: rgba(255, 255, 255, 0.8); /* Background color with transparency */
+    border-radius: 10px; /* Add rounded corners */
+    text-align: 50vh; /* Center text horizontally */
+    margin-top: 10vh;
+    text-align:center
+}
+
+.drop-zone {
+    height: 100%;
+    border: 2px dashed #333; /* Add a dashed border */
+    padding: 20px; /* Add padding inside the drop zone */
+
+}
+
+.drop-zone p {
+    margin-top: 3%;
+    font-size: 35px;
+
+}
+
+#fileInput {
+    display: none; /* Hide the input file element */
+}
+
+/* Hide image containers initially */
+.image-container {
+    display: none;
+}
+
+h1 {
+    color: #333;
+    margin: 0; /* Remove default margin */
+}
+
+/* Center the image horizontally and vertically within its container */
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px; /* Adjust this margin as needed */
+}
+
+.image-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+/* Style the image as needed */
+#originalImage {
+    max-width: 100%; /* Ensure the image doesn't exceed its container */
+    max-height: 300px; /* Set a maximum height if needed */
+    margin-bottom: 50px;
+}
+
+
+h2 {
+    color: #ccc;
+    margin-top: 20vh;
+}
+
+img {
+    max-width: 100%;
+}
+.nav-item {
+    display: inline-block;
+    text-align: right;
+}
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 30vh;
+}
+
+.introWords, .introWords1 {
+    color: azure;
+    font-size: 30px;
+    text-align: center;
+}
+.introWords {
+    font-size: 50px;
+}

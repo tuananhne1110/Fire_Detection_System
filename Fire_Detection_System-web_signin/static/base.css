@@ -1,0 +1,79 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Đảm bảo các mục trong thanh điều hướng hiển thị hàng ngang */
+#header {
+  height: 46px;
+  background-color: orange;
+}
+
+#branding {
+    background-color: orange;
+    padding-left: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: left; 
+}
+#navbar li {
+  display: inline-block; 
+}
+
+#navbar li a {
+  color: #fff;
+  text-decoration: none;
+  line-height: 46px;
+  padding: 0 24px;
+  display: inline-block;
+  text-align: right;
+}
+
+#navbar li:hover a {
+  background-color: #fff;
+  color: #000;
+}
+
+/* #about-us{
+  text-align: center;
+  padding-top: 15rem;
+} */
+
+
+body::before {
+  content: "";
+  background-image: url('https://cdn.who.int/media/images/default-source/health-and-climate-change/fire-fighters-at-forest-fire-c-quarrie-photography.tmb-1200v.jpg?sfvrsn=8b60f828_4'); /* Replace 'your-background-image.jpg' with the path to your image */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  /* filter: blur(5px);  */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Place the blurred background behind other content */
+}
+
+body {
+  background-color: rgba(0, 0, 0, 0.5); /* Optional overlay color */
+  /* ... (other body styles) ... */
+}
+
+
+#about-us-container {
+  width: 80%; /* Set the width of the container */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 20px; /* Add some padding for spacing */
+  background-color: rgba(255, 255, 255, 0.8); /* Background color with transparency */
+  border-radius: 10px; /* Add rounded corners */
+  text-align: center; /* Center text horizontally */
+  margin-top: 15rem;
+}
+
+#about-us {
+  padding: 10px;
+}
+

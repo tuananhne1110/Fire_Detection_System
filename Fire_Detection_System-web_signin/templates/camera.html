@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block additional_css %}
+<link href="{{ url_for('static', filename='camera.css') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+{% block content %}
+<div class="center-container">
+    <p class="introWords">Live Cam</p>
+    <p class="introWords1">Detect where is the fire in the camera in real-time</p>
+</div>
+
+<video id="video" width="640" height="480" autoplay></video>
+<button id="startRecording">Start Recording</button>
+<button id="stopRecording" style="display: none;">Stop Recording</button>
+<button id="saveVideo" style="display: none;">Save Video</button>
+
+<script>
+    let mediaRecorder;
+    let recordedChunks = [];
+    const videoElement = document.getElementById("video");
+
+    // Khởi tạo camera
+    navigator.mediaDevices
+        .getUserMedia({ video: true, audio: true })
+        .then((stream) => {
+            videoElement.srcObject = stream;
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.ondataavailable = (e) => {
+                if (e.data.size > 0) {
+                    recordedChunks.push(e.data);
+                }
+            };
+        })
+        .catch((error) => {
+            console.error("Error accessing camera:", error);
+        });
+
+    document.getElementById("startRecording").addEventListener("click", () => {
+        mediaRecorder.start();
+        document.getElementById("startRecording").style.display = "none";
+        document.getElementById("stopRecording").style.display = "block";
+    });
+
+    document.getElementById("stopRecording").addEventListener("click", () => {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+            mediaRecorder.stop();
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: "video/webm" });
+                const formData = new FormData();
+                formData.append("video_blob", blob, "video.webm");
+
+                // Gửi video blob lên server
+                fetch("/save_video", {
+                    method: "POST",
+                    body: formData,
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data);
+                        document.getElementById("saveVideo").style.display = "block";
+                    })
+                    .catch((error) => {
+                        console.error("Error saving video:", error);
+                    });
+
+                // Reset
+                recordedChunks = [];
+                document.getElementById("startRecording").style.display = "block";
+                document.getElementById("stopRecording").style.display = "none";
+            };
+        }
+    });
+
+    document.getElementById("saveVideo").addEventListener("click", () => {
+        // Trigger the download of the recorded video
+        const a = document.createElement("a");
+        a.href = "/get_video";
+        a.download = "recorded_video.webm";
+        a.click();
+    });
+</script>
+{% endblock %}
