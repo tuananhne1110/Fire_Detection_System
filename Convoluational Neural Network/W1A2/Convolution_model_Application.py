@@ -48,7 +48,6 @@ def happyModel():
     return model
 
 
-# In[9]:
 
 
 happy_model = happyModel()

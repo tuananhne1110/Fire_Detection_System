@@ -3,22 +3,15 @@ import h5py
 import matplotlib.pyplot as plt
 from public_tests import *
 
-plt.rcParams['figure.figsize'] = (5.0, 4.0) # set default size of plots
-plt.rcParams['image.interpolation'] = 'nearest'
-plt.rcParams['image.cmap'] = 'gray'
 
 
 np.random.seed(1)
-
 
 def zero_pad(X, pad):
     X_pad = np.pad(X,((0,0),(pad,pad),(pad,pad),(0,0)))
     
     
     return X_pad
-
-
-# In[3]:
 
 
 np.random.seed(1)
@@ -109,7 +102,6 @@ def conv_forward(A_prev, W, b, hparameters):
     return Z, cache
 
 
-# In[7]:
 
 
 np.random.seed(1)
@@ -186,10 +178,8 @@ def pool_forward(A_prev, hparameters, mode = "max"):
     return A, cache
 
 
-# In[9]:
 
 
-# Case 1: stride of 1
 np.random.seed(1)
 A_prev = np.random.randn(2, 5, 5, 3)
 hparameters = {"stride" : 1, "f": 3}
@@ -425,7 +415,6 @@ def pool_backward(dA, cache, mode = "max"):
     return dA_prev
 
 
-# In[18]:
 
 
 np.random.seed(1)
