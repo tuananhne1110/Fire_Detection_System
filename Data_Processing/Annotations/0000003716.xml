@@ -1,0 +1,1 @@
+<Annotation><filename>0000003716</filename><size><width>1280</width><height>720</height><depth>3</depth></size><object><name>fire</name><pose>Unspecified</pose><truncated>0</truncated><difficult>0</difficult><bndbox><xmin>224</xmin><ymin>286</ymin><xmax>315</xmax><ymax>479</ymax></bndbox></object></Annotation>
