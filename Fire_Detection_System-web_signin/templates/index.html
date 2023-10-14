@@ -24,10 +24,14 @@
 <input type="file" id="fileInput" accept="image/*" style="display: none;">
 
 <!-- Image containers initially hidden -->
-<div class="image-container" id="originalImageContainer" style="display: none;">
-    <h2>Original Image</h2>
-    <div class="image-wrapper">
+<div class="image-container" id="originalImageContainer" style="display: none; margin: 5vw;">
+    <div class="image-container-Ori">
+        <h2>Original Image</h2>
         <img id="originalImage" src="#" alt="Original Image">
+    </div>
+    <div class="image-container-Gra">
+        <h2>Processed Image</h2>
+        <img id="grayscaleImage" src="#" alt="Grayscale Image">
     </div>
 </div>
 <!-- <div class="image-container" id="grayscaleImageContainer" style="display: none;">

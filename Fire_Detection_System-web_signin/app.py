@@ -30,6 +30,32 @@ def signin():
 
 
 @app.route('/process-image', methods=['POST'])
+def process_image():
+    try:
+        image_blob = request.files['image_blob']
+        if image_blob:
+            # Read the image blob as bytes
+            image_data = image_blob.read()
+
+            # Convert the image data to a NumPy array
+            image_np = np.frombuffer(image_data, np.uint8)
+
+            # Decode the image using OpenCV
+            image = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
+
+            # Convert the image to grayscale
+            gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+            # Encode the grayscale image to a base64 string
+            _, buffer = cv2.imencode('.jpg', gray_image)
+            gray_image_base64 = base64.b64encode(buffer).decode('utf-8')
+
+            # Return the grayscale image as a base64 string
+            return jsonify({"gray_image": gray_image_base64})
+        else:
+            return jsonify({"error": "No image blob received"}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 @app.route('/camera')
 def camera():
     return render_template('camera.html') 
@@ -59,8 +85,26 @@ def get_video():
         return send_file(video_path, mimetype='video/webm', as_attachment=True)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+def upload():
+    if 'file' not in request.files:
+        return "No file part"
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return "No selected file"
+
+    if file:
+        # Save the uploaded image to the UPLOAD_FOLDER
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(filename)
+
+        # Process the image to grayscale
+        img = Image.open(filename).convert('L')
+        processed_filename = os.path.join(app.config['PROCESSED_FOLDER'], 'grayscale_' + file.filename)
+        img.save(processed_filename)
+
+        return render_template('index.html', original_image=file.filename, grayscale_image='grayscale_' + file.filename)
  
 if __name__ == '__main__':
     app.run(debug=True)
-#4:00 10/10

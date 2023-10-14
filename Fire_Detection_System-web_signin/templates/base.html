@@ -7,22 +7,9 @@
     <title>Fire Detection</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    
     <link href="{{ url_for('static', filename='base.css') }}" rel="stylesheet" type="text/css" media="all" />
-    <!-- <style>
-      /* .header {
-          background-image: linear-gradient(0, #333, #ccc);
-      } */
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
 
-      body {
-          background-image: url('https://cdn.who.int/media/images/default-source/health-and-climate-change/fire-fighters-at-forest-fire-c-quarrie-photography.tmb-1200v.jpg?sfvrsn=8b60f828_4'); /* Replace 'your-background-image.jpg' with the path to your image */
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-attachment: fixed;
-          background-position: center center;
-          filter: blur(10px); /* Apply a blur effect, adjust the value as needed */
-          backdrop-filter: blur(10px); /* Apply a blur effect to the backdrop, adjust the value as needed */
-          background-color: rgba(0, 0, 0, 0.5); /* Optional overlay color */
-      }
-    </style>   -->
+
     {% block additional_css %}{% endblock %}
 
 
@@ -34,27 +21,102 @@
           <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Demo</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ url_for('camera') }}" id="live-camera">Live Camera</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('signin') }}">Sign in</a></li>
+          <li class="nav-item" id="SignIn"><a class="nav-link" href="{{ url_for('signin') }}">Sign in</a></li>
         </ul>
       </nav>
     </div>
     
+    
     {% block content %}
-    <!-- Thêm phần "About Us" tại đây -->
-    <!-- <div id="about-us">
-        <h2>About Us</h2>
-        <p>Welcome to our Fire Detection System website. We are dedicated to providing you with the latest information and technology related to fire detection and safety.</p>
-    </div> -->
+
+
     <div id="about-us-container">
       <div id="about-us">
           <h2>About Us</h2>
-          <p>Welcome to our Fire Detection System website. We are dedicated to providing you with the latest information and technology related to fire detection and safety.</p>
+          <p>Welcome to our deep learning project dedicated to enhancing fire detection in real-time using cameras. We are a team of passionate and driven university students, coming together to make a meaningful impact on fire safety. Our project is a manifestation of our commitment to leveraging cutting-edge technology to improve safety measures in a variety of environments.</p>
       </div>
     </div>
+    
+    <div class="about_us_column" >
+      <div class="about_us_column_text" >
+        <h3>Our Mission</h3>
+        <p class="about_us_column_text_script">In a world where fire incidents can have devastating consequences, our mission is to create a system that empowers individuals and organizations to detect fires as early as possible. By utilizing camera-based fire detection, we aim to offer a wide-ranging solution suitable for large spaces, warehouses, and any area where traditional smoke detection systems might fall short. Our primary focus is on ensuring the safety and well-being of people and their assets, and we believe that early fire detection is an essential step in achieving this goal.</p>
+      </div>
+      <div class="about_us_column_img" >
+        <video width="640" height="360" controls>
+          <source src="./static/flame.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        
+      </div>
+    </div>
+  
+  </div>
     {% endblock %}
 
-</body>
 
+</body>
+<footer>
+  <div class="footer">
+    <div class="flex flex-row">
+    <div class="foot_column1" id="foot_content1">
+      <h3 class="khanh_img">
+        <img src="../static/khanh2.jpg" alt="", style="max-width: 15%;max-height: 15%;">
+      </h3>
+        <h4 class="logo_content">We are a dynamic team of dedicated university students on a mission to advance fire detection using cutting-edge technology. Our passion and commitment drive us as we work tirelessly to enhance fire safety in diverse environments. Welcome to our deep learning project, where we're making real-time fire detection with cameras a reality.</h4>
+    </div>
+    <div class="foot_column" id="foot_content2">
+      <h3>Contacts</h3>
+      <ul class="foot_list">
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fa-solid fa-location-dot"></i>
+            11/22/33, duong A, phuong b, quan C, tp D, Viet Nam
+          </a>
+        </li>
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fa-solid fa-phone"></i>
+            09123456789
+          </a>
+        </li>
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fa-solid fa-envelope"></i>
+            Mail
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="foot_column2" id="foot_content3">
+      <h3>Follow us</h3>
+      <ul class="foot_list">
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fab fa-facebook"></i>
+            Facebook
+          </a>
+        </li>
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fa-brands fa-linkedin"></i>
+            Linkendin
+          </a>
+        </li>
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fa-brands fa-github"></i>
+            Git hub
+          </a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="copyright">
+      Copyright @2023
+    </div>
+  </div>
+</footer>
 <script>
   let cameraLink = document.getElementById("live-camera")
   console.log(cameraLink)

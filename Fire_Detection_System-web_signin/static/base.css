@@ -1,24 +1,26 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 /* Đảm bảo các mục trong thanh điều hướng hiển thị hàng ngang */
 #header {
   height: 46px;
   background-color: orange;
+
 }
 
-#branding {
-    background-color: orange;
-    padding-left: 40px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    text-align: left; 
-}
+/* #branding {
+  background-color: orange;
+  padding-left: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: left;
+} */
 #navbar li {
-  display: inline-block; 
+  display: inline-block;
 }
 
 #navbar li a {
@@ -34,12 +36,10 @@
   background-color: #fff;
   color: #000;
 }
-
-/* #about-us{
-  text-align: center;
-  padding-top: 15rem;
-} */
-
+#SignIn {
+  position: absolute;
+  right: 2vw;
+}
 
 body::before {
   content: "";
@@ -48,7 +48,7 @@ body::before {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center center;
-  /* filter: blur(5px);  */
+  filter: blur(4px); /* Apply a 5px blur to the background image */
   position: fixed;
   top: 0;
   left: 0;
@@ -61,7 +61,6 @@ body {
   background-color: rgba(0, 0, 0, 0.5); /* Optional overlay color */
   /* ... (other body styles) ... */
 }
-
 
 #about-us-container {
   width: 80%; /* Set the width of the container */
@@ -77,3 +76,138 @@ body {
   padding: 10px;
 }
 
+.about_us_column {
+  display: flex;
+  align-items: center;
+  margin-top: 35vh; /*khoang cach*/
+  background-color: rgb(255, 134, 48);
+}
+
+ .about_us_column_img {
+  flex: 1;
+  text-align: center;
+  margin-top: 2vh;
+  margin-bottom: 3.5vh;
+  margin-left: 2vh;
+  margin-right: 2vh;
+}
+.about_us_column_text{
+  flex: 1;
+  text-align: center;
+  margin: 2vh;
+}
+.about_us_column_text h3 {
+  margin: 0; /* Remove default margin for h3 */
+}
+
+.about_us_column_text_script {
+  margin: 0; /* Remove default margin for p */
+}
+.about_us_text {
+  display: flex;
+  align-items: center; /* Vertically center the content */
+}
+.text {
+  flex: 1; /* Allow text to grow and take up available space */
+}
+.image {
+  flex: 0; /* Prevent the image from growing */
+  margin-left: 20px; /* Add some space between text and image */
+}
+.about_us_column_text_script{
+  padding-top:2vh;
+  padding-bottom:2vh;
+  padding-left: 2vh;
+
+}
+
+
+.footer {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.8); 
+  border-radius: 10px; /* Add rounded corners */
+  padding: 10px; /* Add padding for spacing */
+  width: 100%; /* Full width of the page */
+  margin-top: 80vh;
+  flex-direction: column;
+}
+
+.foot_column, .foot_column1, .foot_column2{
+  margin-top: 20px;
+  text-align: center;
+  color: white; /* Text color */
+  /* Add other styles as needed */
+}
+
+.foot_column1{
+  width: 50vw;
+}
+.foot_column{
+  width: 30vw;
+}
+.foot_column2{
+  width: 20vw;
+}
+.foot_column h3 {
+  margin: 0; /* Remove default margin for <h3> elements */
+  /* Add other styles as needed */
+}
+.footer h3{
+  font-size: 1.5rem;
+}
+.foot_list_list_item {
+  font-size: 0.8rem
+}
+.footer h4{
+  margin-top: vh;
+  font-size: 1rem;
+}
+.foot_list{
+  list-style: none;
+  padding-left: 0;
+}
+.foot_list_list_item{
+  text-decoration: none;
+  color:#fff;
+  display: flex;
+  align-items:  center;
+}
+.foot_list_list_item:hover {
+  color: orangered
+}
+.foot_list_list{
+  margin-top: 1rem;
+}
+.foot_list{
+  margin-top: 1vh;
+}
+.foot_list_icon {
+  font-size: 1.25rem;
+  margin-top: 1px;
+  margin-right: 10px;
+}
+
+.foot_list{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.logo_content{
+  padding: 1rem;
+}
+#copyright {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #fff;
+}

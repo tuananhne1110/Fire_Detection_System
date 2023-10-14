@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const dropZone = document.getElementById("dropZone");
     const originalImage = document.getElementById("originalImage");
-    // const grayscaleImage = document.getElementById("grayscaleImage");
     const originalImageContainer = document.getElementById("originalImageContainer");
-    // const grayscaleImageContainer = document.getElementById("grayscaleImageContainer");
     const fileInput = document.getElementById("fileInput");
 
     // Prevent default behavior for drop events
@@ -36,24 +34,63 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     // scrol down
     // JavaScript code
-   
-
-
     function handleImage(file) {
         if (file) {
+            const fileSizeInBytes = file.size
+            
             const reader = new FileReader();
 
             reader.onload = function (e) {
                 originalImage.src = e.target.result;
 
                 // Show image containers once an image is loaded
-                originalImageContainer.style.display = "block";
+                originalImageContainer.style.display = "flex";
+                originalImageContainer.style.flexDirection = "row";
+                originalImageContainer.style.justifyContent = "space-between";
 
-                // Scroll to the end of the page with smooth behavior
-                window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+                originalImage.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'center' 
+                });
+
             };
+            // Create a FormData object to send the image to the server
+            const formData = new FormData();
+            formData.append('image_blob', file);
 
+            // Send the image for processing to the server
+            fetch('/process-image', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the grayscale image
+                if (data.gray_image) {
+                    const grayscaleImage = document.getElementById('grayscaleImage');
+                    grayscaleImage.src = 'data:image/jpeg;base64,' + data.gray_image;
+                    grayscaleImage.classList.add('grayscale-image');
+                }
+            })
+            .catch(error => {
+                console.error('Error processing the image:', error);
+            });
             reader.readAsDataURL(file);
         }
     }
+    // function handleImageUpload() {
+    //     const fileInput = document.getElementById("fileInput");
+    //     const file = fileInput.files[0]; // Get the first selected file (assuming only one file is selected)
+    
+    //     if (file) {
+    //         const fileSizeInBytes = file.size;
+    //         const fileSizeInKilobytes = fileSizeInBytes / 1024;
+    //         const fileSizeInMegabytes = fileSizeInKilobytes / 1024;
+    
+    //         console.log("File size in bytes: " + fileSizeInBytes);
+    //         console.log("File size in kilobytes: " + fileSizeInKilobytes);
+    //         console.log("File size in megabytes: " + fileSizeInMegabytes);
+    //     }
+    // }
 });
