@@ -1,12 +1,21 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, Response
+from flask import Flask, render_template, request, redirect, url_for, jsonify, Response,session
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 import cv2
 import numpy as np
 import io
 from PIL import Image
 import base64
+import os
 
+# Generate a random secret key
+secret_key = os.urandom(24)
 app = Flask(__name__)
+app.config['SECRET_KEY'] = secret_key
+app.config['SESSION_TYPE'] = 'filesystem'
+
+Session(app)
+
 
 @app.route('/')
 @app.route('/home')
@@ -22,11 +31,12 @@ def index():
 def signin():
     # if request.method == 'POST':
     #     # Xử lý đăng nhập ở đây
-    #     username = request.form['username']
+    username = request.form.get('username')
     #     password = request.form['password']
     #     fullname = request.form['fullname']
     #     email = request.form['email']   
-    return render_template('signin.html')
+    session['username'] = username
+    return render_template('signin.html', username=username)
 
 
 @app.route('/process-image', methods=['POST'])

@@ -21,7 +21,16 @@
           <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Demo</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ url_for('camera') }}" id="live-camera">Live Camera</a></li>
-          <li class="nav-item" id="SignIn"><a class="nav-link" href="{{ url_for('signin') }}">Sign in</a></li>
+          <!-- <li class="nav-item" id="SignIn"><a class="nav-link" href="{{ url_for('signin') }}">Sign in</a></li> -->
+          <!-- 15/10 doi ten trong -->
+          <li class="nav-item" id="signin-link">
+            {% if 'username' in session %}
+            <a class="nav-link" href="#">{{ session['username'] }}</a>
+            {% else %}
+            <a class="nav-link" href="{{ url_for('signin') }}">Sign in</a>
+            {% endif %}
+          </li>
+          <!-- 15/10 doi ten trong -->
         </ul>
       </nav>
     </div>
@@ -61,7 +70,7 @@
     <div class="flex flex-row">
     <div class="foot_column1" id="foot_content1">
       <h3 class="khanh_img">
-        <img src="../static/khanh2.jpg" alt="", style="max-width: 15%;max-height: 15%;">
+        <img src="../static/demo.png" alt="", style="max-width: 15%;max-height: 15%;">
       </h3>
         <h4 class="logo_content">We are a dynamic team of dedicated university students on a mission to advance fire detection using cutting-edge technology. Our passion and commitment drive us as we work tirelessly to enhance fire safety in diverse environments. Welcome to our deep learning project, where we're making real-time fire detection with cameras a reality.</h4>
     </div>
