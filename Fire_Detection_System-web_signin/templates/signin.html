@@ -6,84 +6,27 @@
 
 {% block content %}
 <!-- 15/10 cai dep dep -->
+<form action="" method="post">
 <div class="sign-in-container bottom-space">
   <div class="sign-in-container">
-
       <h3>Login Here</h3>
 
-      <label for="username">Username</label>
-      <!-- <input type="text" placeholder="Email or Phone" id="username"> -->
-      <input type="text" name="username" placeholder="Email or Phone" id="username">
+          <label for="username">Username</label>
+          <!-- <input type="text" placeholder="Email or Phone" id="username"> -->
+          <input type="text" name="username" placeholder="Email or Phone" id="username">
 
-      <label for="password">Password</label>
-      <input type="password" placeholder="Password" id="password">
+          <label for="password">Password</label>
+          <input type="password" placeholder="Password" name="password">
 
-      <button id="signin-button">Log In</button>
+          <button id="signin-button" type ="submit">Log In</button>
+
   </div>
 </div>
+</form>
 
 <div id="loading-container" style="display: none;">
   <p>Loading...</p>
 </div>
 
-<script>
-function scrollToSignInMiddle() {
-    const signInContainer = document.querySelector('.sign-in-container');
-    
-    if (signInContainer) {
-        // Get the middle of the sign-in container relative to the viewport
-        const middleOfContainer = signInContainer.getBoundingClientRect().top + (signInContainer.clientHeight / 8);
-
-        // Scroll to the middle of the container
-        window.scrollTo({
-            top: middleOfContainer,
-            behavior: 'smooth'
-        });
-    }
-}
-
-// Call the scrollToSignInMiddle function when the page loads
-window.addEventListener('load', scrollToSignInMiddle);
-
-// Function to simulate a sign-in process (replace this with your actual sign-in logic)
-async function performSignIn() {
-    // Simulate sign-in process
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulating a delay
-
-    // Successful sign-in
-    return true;
-}
-
-// Function to handle sign-in
-async function handleSignIn() {
-    // Display loading message
-    const loadingContainer = document.getElementById('loading-container');
-    loadingContainer.style.display = 'block';
-
-    // Perform the sign-in
-    const isSignedIn = await performSignIn(); // Replace with your sign-in logic
-
-    // Hide loading message
-    loadingContainer.style.display = 'none';
-
-    if (isSignedIn) {
-        // If sign-in is successful, redirect to the other page
-        window.location.href = 'camera';
-    }
-}
-
-// Call the handleSignIn function when the user clicks a sign-in button or form submission
-// Replace 'signin-button' with the actual ID or class of your sign-in button
-const signinButton = document.getElementById('signin-button');
-signinButton.addEventListener('click', handleSignIn);
-
-// New code to change "Sign in" link text to the username
-const signInLink = document.getElementById('signin-link');
-const username = "User's Username"; // Replace with the actual username
-
-if (signInLink) {
-    signInLink.innerHTML = `<a class="nav-link" href="#">${username}</a>`;
-}
-
-</script>
+<script src="{{ url_for('static', filename='signin.js') }}"></script>
 {% endblock %}

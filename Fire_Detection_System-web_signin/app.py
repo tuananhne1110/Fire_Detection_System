@@ -7,12 +7,14 @@ import io
 from PIL import Image
 import base64
 import os
+import sqlite3
 
 # Generate a random secret key
 secret_key = os.urandom(24)
 app = Flask(__name__)
 app.config['SECRET_KEY'] = secret_key
 app.config['SESSION_TYPE'] = 'filesystem'
+
 
 Session(app)
 
@@ -26,18 +28,70 @@ def home():
 def index():
     return render_template('index.html')
 
+accounts = {
+    "duy" : "duy123"
+}
 
-@app.route('/signin', methods = ['GET','POST'])
+@app.route('/signin/', methods = ['GET','POST'])
 def signin():
-    # if request.method == 'POST':
-    #     # Xử lý đăng nhập ở đây
-    username = request.form.get('username')
-    #     password = request.form['password']
-    #     fullname = request.form['fullname']
-    #     email = request.form['email']   
-    session['username'] = username
-    return render_template('signin.html', username=username)
+    if request.method == 'POST':
 
+        username = request.form.get('username')
+        password = request.form.get('password')
+        # password = str(hash(password))
+        if accounts[username] == password:
+            session['username'] = username
+            return redirect(url_for('camera'))
+        # if username == 'admin' and password == '123':
+        #     return redirect(url_for('camera'))
+
+        # session['username'] = username
+        print(accounts[username],password)
+    return render_template('signin.html', username=session.get('username', ''))  # Pass the username to the template
+
+    # return render_template('signin.html',username)
+    
+
+# @app.route('/signin', methods=['POST'])
+# def signin():
+#     username = request.form['username']
+#     password = request.form['password']
+
+#     user = users_collection.find_one({'username': username, 'password': password})
+
+#     if user:
+
+#         return 'Sign-in successful'
+#     else:
+#         return 'Invalid username or password'
+
+# 21/10 4:00
+# 21/10 4:00
+# 21/10 4:00
+# @app.route('/signin/', methods=['GET', 'POST'])
+# def signin():
+#     if request.method == 'POST':
+#         # Xử lý đăng nhập ở đây
+#         username = request.form.get('username')
+#         password = request.form['password']
+#         # fullname = request.form['fullname']
+#         # email = request.form['email']   
+#         session['username'] = username
+#     return render_template('signin.html', username=username)
+# 21/10 4:00
+# 21/10 4:00
+# 21/10 4:00
+
+# @app.route('/signin', methods=['POST'])
+# def signin():
+#     username = request.form.get('username')
+#     password = request.form.get('password')
+
+#     if username in users and users[username] == password:
+#         session['username'] = username
+#         return jsonify({"success": "Login successful"})
+#     else:
+#         return jsonify({"error": "Invalid username or password"}), 401
 
 @app.route('/process-image', methods=['POST'])
 def process_image():
@@ -66,6 +120,7 @@ def process_image():
             return jsonify({"error": "No image blob received"}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 @app.route('/camera')
 def camera():
     return render_template('camera.html') 
@@ -84,7 +139,7 @@ def save_video():
             return jsonify({"error": "No video blob received"}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-   
+
 @app.route('/get_video', methods=['GET'])
 def get_video():
     try:
@@ -95,6 +150,7 @@ def get_video():
         return send_file(video_path, mimetype='video/webm', as_attachment=True)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 def upload():
     if 'file' not in request.files:
         return "No file part"
@@ -115,6 +171,6 @@ def upload():
         img.save(processed_filename)
 
         return render_template('index.html', original_image=file.filename, grayscale_image='grayscale_' + file.filename)
- 
+
 if __name__ == '__main__':
     app.run(debug=True)
