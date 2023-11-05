@@ -3,11 +3,11 @@ function scrollToSignInMiddle() {
     
     if (signInContainer) {
  
-        const middleOfContainer = signInContainer.getBoundingClientRect().top + (signInContainer.clientHeight / 20);
+        const middleOfContainer = signInContainer.getBoundingClientRect().top + (signInContainer.clientHeight - 650);
 
         window.scrollTo({
             top: middleOfContainer,
-            behavior: 'smooth'
+            behavior: 'auto'
         });
     }
 }

@@ -3,23 +3,21 @@ body {
     text-align: left;
 }
 
-
 .container {
-    width: 50%; 
+    width: 50%;
     height: 20wh;
-    margin: 0 auto; 
-    padding: 20px; 
-    background-color: rgba(255, 255, 255, 0.8); 
-    border-radius: 10px; 
-    text-align: 50vh; 
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 251, 208, 0.85);
+    border-radius: 10px;
     margin-top: 10vh;
-    text-align:center
+    text-align: center;
 }
 
 .drop-zone {
     height: 100%;
     border: 2px dashed #333;
-    padding: 20px; 
+    padding: 20px;
 }
 
 .drop-zone p {
@@ -28,48 +26,39 @@ body {
 }
 
 #fileInput {
-    display: none; 
+    display: none;
 }
 
 .image-container {
     display: flex;
     justify-content: space-between;
-    align-items: center; 
-    margin: 5vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    background-color: rgba(38, 31, 31, 0.8);
+    margin-bottom: 5vh;
+    margin-top: 40vh;
+    padding-bottom: 5vh;
 }
 
 .image-container div {
     text-align: center;
-    flex: 1; 
+    flex: 1;
 }
 
 .image-container img {
-    max-width: 100%;
-    height: auto;
-}
-
-#originalImage {
-    max-width: 100%; 
-    max-height: 300px; 
-}
-
-.grayscale-image {
-    max-width: 100%; 
-    max-height: 300px; 
+    max-width: 40vw;
+    max-height: 40vh;
 }
 
 h1 {
     color: #333;
-    margin: 0; 
+    margin: 0;
 }
 
 h2 {
-    color: #ccc;
-    margin-top: 20vh;
-}
-
-img {
-    max-width: 100%;
+    color: #ff0000;
+    margin-top: 5vh;
+    margin-bottom: 5px;
 }
 
 .nav-item {
@@ -87,7 +76,7 @@ img {
 }
 
 .introWords, .introWords1 {
-    color: azure;
+    color: #FFFFCC;
     font-size: 30px;
     text-align: center;
 }
@@ -95,5 +84,3 @@ img {
 .introWords {
     font-size: 50px;
 }
-
-

@@ -5,39 +5,32 @@
 {% endblock %}
 
 {% block content %}
-<!-- <div class="header">
-    <h1>Fire Detection</h1>
-</div> -->
+
 <!--Intro words-->
 <div class="center-container">
     <p class="introWords">Fire Detect Demo</p>
     <p class="introWords1">Detect where is the fire in your image/video that you provide us</p>
 </div>
+
 <!-- Add a drop zone for drag-and-drop -->
 <div class="container">
     <div class="drop-zone" id="dropZone">
         <p>Drag & Drop an image here or click to select</p>
     </div>
 </div>
+<input type="file" id="fileInput" accept="image/*, video/*" style="display: none;">
 
-<!-- Input file element for fallback -->
-<input type="file" id="fileInput" accept="image/*" style="display: none;">
-
-<!-- Image containers initially hidden -->
-<div class="image-container" id="originalImageContainer" style="display: none; margin: 5vw;">
-    <div class="image-container-Ori">
-        <h2>Original Image</h2>
-        <img id="originalImage" src="#" alt="Original Image">
+<!-- Display result -->
+<div class="image-container" id="originalImageContainer" style="display: none; ">
+    <div class="image-container-title" id="image-container-Ori" >
+        <h2>Original Input</h2>
     </div>
-    <div class="image-container-Gra">
+    <div class="image-container-title"id="image-container-Gra">
         <h2>Processed Image</h2>
-        <img id="grayscaleImage" src="#" alt="Grayscale Image">
+        <img id="grayscaleImage" src="#" alt="Grayscale Image" style=" border-radius: 10px;">
     </div>
 </div>
-<!-- <div class="image-container" id="grayscaleImageContainer" style="display: none;">
-    <h2>Fire Detect</h2>
-    <img id="grayscaleImage" src="#" alt="Grayscale Image">
-</div> -->
 
+<!-- Script -->
 <script src="{{ url_for('static', filename='demo_script.js') }}"></script>
 {% endblock %}

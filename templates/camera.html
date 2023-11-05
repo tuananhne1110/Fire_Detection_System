@@ -9,16 +9,54 @@
     <p class="introWords">Live Cam</p>
     <p class="introWords1">Detect where is the fire in the camera in real-time</p>
 </div>
+<div class="video_display_container">
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="startRecording">Start Recording</button>
+    <button id="stopRecording" style="display: none;">Stop Recording</button>
+    <button id="saveVideo" style="display: none;">Save Video</button>
+</div>
+<!-- <div class="notfi-his-drop">
+    <button class="notifi_his">
+        <i class="fa-regular fa-bell fa-xl" style="color: #eb9500;"></i>
+    </button>
+</div> -->
 
-<video id="video" width="640" height="480" autoplay></video>
-<button id="startRecording">Start Recording</button>
-<button id="stopRecording" style="display: none;">Stop Recording</button>
-<button id="saveVideo" style="display: none;">Save Video</button>
+<div class="notification">
+    <div class="notification-icon"><i class="fa-regular fa-bell fa-xl" style="color: rgb(255, 134, 48) "></i></div>
+    <div class="notification-dropdown">
+        <div class="notification-item">Notification 1</div>
+        <div class="notification-item">Notification 2</div>
+        <div class="notification-item">Notification 3</div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
+
     let mediaRecorder;
     let recordedChunks = [];
     const videoElement = document.getElementById("video");
+
+    function renderHistory() {
+        // TODO: fetch data
+        let mockData = [
+            { message: "chay roi du ma", time: new Date() }, 
+            { message: "chay roi duma duma", time: new Date() }, 
+        ]
+    }
 
     // Khởi tạo camera
     navigator.mediaDevices
@@ -79,5 +117,12 @@
         a.download = "recorded_video.webm";
         a.click();
     });
-</script>
+
+
+    // notification
+    const notification = document.getElementById('notification');
+        notification.addEventListener('click', function () {
+            this.classList.toggle('active');
+        });
+</script>   
 {% endblock %}
