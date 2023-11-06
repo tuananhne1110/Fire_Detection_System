@@ -1,0 +1,71 @@
+
+
+.sign-in-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  margin-top: 10vh;
+}
+
+.sign-in-container * {
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+}
+
+.sign-in-container > .sign-in-container {
+  background: rgba(255, 255, 255, 0.13);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 50px 35px;
+  width: 400px;
+}
+
+.sign-in-container h3 {
+  font: 32px 500/42px Poppins, sans-serif;
+  text-align: center;
+}
+
+.sign-in-container label {
+  display: flex;
+  margin-top: 30px;
+  font: 16px 500 Poppins, sans-serif;
+  text-align: left !important;
+  height: 20px;
+}
+
+.sign-in-container input {
+  display: block;
+  height: 50px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  padding: 2vh 10px;
+  margin-top: 8px;
+  font: 14px 300 Poppins, sans-serif;
+}
+
+.sign-in-container ::placeholder {
+  color: #e5e5e5;
+}
+
+.sign-in-container button {
+  margin-top: 50px;
+  width: 100%;
+  background: #ffffff;
+  color: #080710;
+  padding: 15px 0;
+  font: 18px 600 Poppins, sans-serif;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#signin-button:hover{
+    background-color: #fa8d62;
+    cursor: pointer;
+
+}

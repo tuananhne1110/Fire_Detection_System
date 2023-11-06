@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block additional_css %}
+<link href="{{ url_for('static', filename='camera.css') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+{% block content %}
+<div class="center-container">
+    <p class="introWords">Live Cam</p>
+    <p class="introWords1">Detect where is the fire in the camera in real-time</p>
+</div>
+
+<div class="video_display_container" id="video_display_big_cont">
+    <div>
+        <button id="button-s" class="button-l" role="button">Switching WebCam ~ LiveCam</button>
+    </div>
+    <div class="video-wrapper">
+        <video id="video" width="640" height="480" autoplay></video>
+    </div>
+    <div class="button-wrapper">
+        <button id="startRecording" class="button-l" role="button">Start Recording</button>
+        <button id="stopRecording" style="display: none;" class="button-l" role="button">Stop Recording</button>
+        <button id="saveVideo" style="display: none;" class="button-l" role="button">Save Video</button>
+    </div>
+</div>
+
+
+
+<!-- <div class="notification">
+    <div class="notification-icon"><i class="fa-regular fa-bell fa-xl" style="color: rgb(255, 134, 48) "></i></div>
+    <div class="notification-dropdown">
+        <div class="notification-item">Notification 1</div>
+        <div class="notification-item">Notification 2</div>
+        <div class="notification-item">Notification 3</div>
+    </div>
+</div> -->
+
+
+<script>
+
+    let mediaRecorder;
+    let recordedChunks = [];
+    const videoElement = document.getElementById("video");
+
+    function renderHistory() {
+        // TODO: fetch data
+        let mockData = [
+            { message: "chay roi du ma", time: new Date() }, 
+            { message: "chay roi duma duma", time: new Date() }, 
+        ]
+    }
+
+    // Khởi tạo camera
+    navigator.mediaDevices
+        .getUserMedia({ video: true, audio: true })
+        .then((stream) => {
+            videoElement.srcObject = stream;
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.ondataavailable = (e) => {
+                if (e.data.size > 0) {
+                    recordedChunks.push(e.data);
+                }
+            };
+        })
+        .catch((error) => {
+            console.error("Error accessing camera:", error);
+        });
+
+    document.getElementById("startRecording").addEventListener("click", () => {
+        mediaRecorder.start();
+        document.getElementById("startRecording").style.display = "none";
+        document.getElementById("stopRecording").style.display = "block";
+    });
+
+    document.getElementById("stopRecording").addEventListener("click", () => {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+            mediaRecorder.stop();
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: "video/webm" });
+                const formData = new FormData();
+                formData.append("video_blob", blob, "video.webm");
+
+                // Gửi video blob lên server
+                fetch("/save_video", {
+                    method: "POST",
+                    body: formData,
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data);
+                        document.getElementById("saveVideo").style.display = "block";
+                    })
+                    .catch((error) => {
+                        console.error("Error saving video:", error);
+                    });
+
+                // Reset
+                recordedChunks = [];
+                document.getElementById("startRecording").style.display = "block";
+                document.getElementById("stopRecording").style.display = "none";
+            };
+        }
+    });
+
+    document.getElementById("saveVideo").addEventListener("click", () => {
+        // Trigger the download of the recorded video
+        const a = document.createElement("a");
+        a.href = "/get_video";
+        a.download = "recorded_video.webm";
+        a.click();
+    });
+
+
+    // notification
+    const notification = document.getElementById('notification');
+        notification.addEventListener('click', function () {
+            this.classList.toggle('active');
+        });
+</script>   
+{% endblock %}

@@ -1,0 +1,205 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  #header {
+    height: 46px;
+    background-color: rgba(255, 153, 0);
+    position: fixed;
+    width: 100%;
+    top: 0;
+  }
+  
+  #navbar li {
+    display: inline-block;
+  }
+  
+  #home_logo_box {
+    display: flex;
+    width: 80px;
+  }
+  
+  #home_logo {
+    margin-bottom: 2px;
+  }
+  
+  #navbar li a {
+    color: #fff;
+    text-decoration: none;
+    line-height: 46px;
+    padding: 0 20px;
+    display: inline-block;
+  }
+  
+  #navbar li:hover a {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  #signin-link {
+    position: absolute;
+    right: 2vw;
+  }
+  
+  body::before {
+    content: "";
+    background: url('https://cdn.who.int/media/images/default-source/health-and-climate-change/fire-fighters-at-forest-fire-c-quarrie-photography.tmb-1200v.jpg?sfvrsn=8b60f828_4');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    filter: blur(4px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  
+  body {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  #about-us-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 251, 208, 0.85);
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 15rem;
+  }
+  
+  .about_us_column {
+    display: flex;
+    align-items: center;
+    margin-top: 35vh;
+    background-color: rgba(255, 134, 48, 0.9);
+  }
+  
+  .about_us_column_img {
+    flex: 1;
+    text-align: center;
+    margin: 2vh 2vh 3.5vh 2vh;
+  }
+  
+  #about_us_video {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .about_us_column_text {
+    flex: 1;
+    text-align: center;
+    margin: 2vh;
+  }
+  
+  .about_us_column_text h3 {
+    margin: 0;
+  }
+  
+  .about_us_column_text_script {
+    margin: 0;
+    padding: 2vh 2vh 2vh 2vh;
+    font-size: 18px;
+  }
+  
+  .footer {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    width: 100%;
+    margin-top: 80vh;
+    flex-direction: column;
+  }
+  
+  .foot_column, .foot_column1, .foot_column2 {
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+  }
+  
+  .foot_column1 {
+    width: 50vw;
+  }
+  
+  .foot_column {
+    width: 30vw;
+  }
+  
+  .foot_column2 {
+    width: 20vw;
+  }
+  
+  .foot_column h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .foot_list_list_item {
+    font-size: 0.8rem;
+  }
+  
+  .footer h4 {
+    font-size: 1rem;
+  }
+  
+  .foot_list {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .foot_list_list_item {
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+  }
+  
+  .foot_list_list_item:hover {
+    color: orangered;
+  }
+  
+  .foot_list_list {
+    margin-top: 1rem;
+  }
+  
+  .foot_list {
+    margin-top: 1vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .foot_list_icon {
+    font-size: 1.25rem;
+    margin-top: 1px;
+    margin-right: 10px;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .flex-row {
+    flex-direction: row;
+  }
+  
+  .logo_content {
+    padding: 1rem;
+  }
+  
+  #copyright {
+    margin: 10px 0;
+    text-align: center;
+    color: #fff;
+  }
+  

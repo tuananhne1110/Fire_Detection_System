@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    text-align: left;
+}
+
+/* INTRODUCTION *//* INTRODUCTION *//* INTRODUCTION */
+/* INTRODUCTION *//* INTRODUCTION *//* INTRODUCTION */
+/* INTRODUCTION *//* INTRODUCTION *//* INTRODUCTION */
+
+.nav-item {
+    display: inline-block;
+    /* text-align: right; */
+}
+
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 30vh;
+    margin-top: 8vh;
+}
+
+.introWords, .introWords1 {
+    color: #FFFFCC;
+    font-size: 30px;
+    text-align: center;
+}
+
+.introWords {
+    font-size: 50px;
+}
+
+/* DROP_ZONE *//* DROP_ZONE *//* DROP_ZONE */
+/* DROP_ZONE *//* DROP_ZONE *//* DROP_ZONE */
+/* DROP_ZONE *//* DROP_ZONE *//* DROP_ZONE */
+.container {
+    width: 50%;
+    height: 20wh;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 251, 208, 0.85);
+    border-radius: 10px;
+    margin-top: 10vh;
+    text-align: center;
+}
+
+.drop-zone {
+    height: 100%;
+    border: 2px dashed #333;
+    padding: 20px;
+}
+
+.drop-zone p {
+    margin-top: 3%;
+    font-size: 35px;
+}
+
+#fileInput {
+    display: none;
+}
+
+/* DISPLAY_RESULT *//* DISPLAY_RESULT *//* DISPLAY_RESULT */
+/* DISPLAY_RESULT *//* DISPLAY_RESULT *//* DISPLAY_RESULT */
+/* DISPLAY_RESULT *//* DISPLAY_RESULT *//* DISPLAY_RESULT */
+.image-container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    background-color: rgba(38, 31, 31, 0.8);
+    margin-bottom: 5vh;
+    margin-top: 40vh;
+    padding-bottom: 5vh;
+}
+
+.image-container div {
+    text-align: center;
+    flex: 1;
+}
+
+.image-container img {
+    max-width: 40vw;
+    max-height: 40vh;
+}
+
+h1 {
+    color: #333;
+    margin: 0;
+}
+
+h2 {
+    color: #ff0000;
+    margin-top: 5vh;
+    margin-bottom: 5px;
+}
