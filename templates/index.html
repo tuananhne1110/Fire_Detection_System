@@ -22,16 +22,23 @@
 <input type="file" id="fileInput" accept="image/*, video/*" style="display: none;">
 
 <!-- Display result -->
-<div class="image-container" id="originalImageContainer" style="display: none; ">
+<div class="image-container" id="originalImageContainer" style="display: none;">
     <div class="image-container-title" id="image-container-Ori" >
         <h2>Original Input</h2>
     </div>
     <div class="image-container-title"id="image-container-Gra">
         <h2>Processed Image</h2>
-        <img id="grayscaleImage" src="#" alt="Grayscale Image" style=" border-radius: 10px;">
+        <div id="loader" class="loader">
+            tao ne duma
+            tao ne duma
+            tao ne duma
+            tao ne duma
+            tao ne duma
+        </div>
     </div>
 </div>
 
 <!-- Script -->
 <script src="{{ url_for('static', filename='demo_script.js') }}"></script>
+
 {% endblock %}

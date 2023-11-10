@@ -12,109 +12,154 @@
 
 <div class="video_display_container" id="video_display_big_cont">
     <div>
-        <button id="button-s" class="button-l" role="button">Switching WebCam ~ LiveCam</button>
+        <button id="switchCameraButton" class="button-l" role="button">Switch IP Camera ~ Webcam</button>
     </div>
     <div class="video-wrapper">
-        <video id="video" width="640" height="480" autoplay></video>
+        <!-- Hide the IP camera video initially -->
+        <p id="ipCameraText" class="camera-text" style="display: none">IP-CAM</p>
+        <p id="webcamText" class="camera-text">WEB-CAM</p>
+
+        <video class="web_cam_cont" id="ipCameraVideo"  width="640" height="480" src="{{ url_for('video_feed') }}" autoplay playsinline style="display: none;"></video>
+        <!-- <img  id="ipCameraVideo" src="{{ url_for('video_feed') }}" width="640" height="480" autoplay playsinline> -->
+        
+        <!-- webcam -->
+        <!-- <video class="web_cam_cont" id="webcamVideo" width="640" height="480" autoplay style="display: block"></video> -->
+        <canvas class="web_cam_cont" id="canvas" width="640" height="480" autoplay  style="display: block"></canvas>
     </div>
-    <div class="button-wrapper">
-        <button id="startRecording" class="button-l" role="button">Start Recording</button>
-        <button id="stopRecording" style="display: none;" class="button-l" role="button">Stop Recording</button>
-        <button id="saveVideo" style="display: none;" class="button-l" role="button">Save Video</button>
-    </div>
+    <!-- Other elements for recording and processing -->
 </div>
 
-
-
-<!-- <div class="notification">
-    <div class="notification-icon"><i class="fa-regular fa-bell fa-xl" style="color: rgb(255, 134, 48) "></i></div>
-    <div class="notification-dropdown">
-        <div class="notification-item">Notification 1</div>
-        <div class="notification-item">Notification 2</div>
-        <div class="notification-item">Notification 3</div>
-    </div>
-</div> -->
-
-
 <script>
-
+    
     let mediaRecorder;
     let recordedChunks = [];
-    const videoElement = document.getElementById("video");
+    // const videoElement = document.getElementById("webcamVideo");
+    const videoElement = document.getElementById("canvas");
 
-    function renderHistory() {
-        // TODO: fetch data
-        let mockData = [
-            { message: "chay roi du ma", time: new Date() }, 
-            { message: "chay roi duma duma", time: new Date() }, 
-        ]
+    // const video1Element = document.getElementById("canvas");
+    let usingIPCamera = false;
+    let stream;
+
+    const ipCameraUrl = 'rtsp://admin:Ditmemay@192.168.52.136/onvif1';
+    // text
+    function toggleCameraText(usingIPCamera) {
+    const ipCameraText = document.getElementById("ipCameraText");
+    const webcamText = document.getElementById("webcamText");
+
+    if (usingIPCamera) {
+        ipCameraText.style.display = "block";
+        webcamText.style.display = "none";
+    } else {
+        ipCameraText.style.display = "none";
+        webcamText.style.display = "block";
+        }
     }
 
-    // Khởi tạo camera
-    navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true })
-        .then((stream) => {
-            videoElement.srcObject = stream;
-            mediaRecorder = new MediaRecorder(stream);
-            mediaRecorder.ondataavailable = (e) => {
-                if (e.data.size > 0) {
-                    recordedChunks.push(e.data);
-                }
-            };
-        })
-        .catch((error) => {
-            console.error("Error accessing camera:", error);
-        });
 
-    document.getElementById("startRecording").addEventListener("click", () => {
-        mediaRecorder.start();
-        document.getElementById("startRecording").style.display = "none";
-        document.getElementById("stopRecording").style.display = "block";
-    });
 
-    document.getElementById("stopRecording").addEventListener("click", () => {
-        if (mediaRecorder && mediaRecorder.state !== "inactive") {
-            mediaRecorder.stop();
-            mediaRecorder.onstop = () => {
-                const blob = new Blob(recordedChunks, { type: "video/webm" });
-                const formData = new FormData();
-                formData.append("video_blob", blob, "video.webm");
-
-                // Gửi video blob lên server
-                fetch("/save_video", {
-                    method: "POST",
-                    body: formData,
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        console.log(data);
-                        document.getElementById("saveVideo").style.display = "block";
-                    })
-                    .catch((error) => {
-                        console.error("Error saving video:", error);
-                    });
-
-                // Reset
-                recordedChunks = [];
-                document.getElementById("startRecording").style.display = "block";
-                document.getElementById("stopRecording").style.display = "none";
-            };
+    // Initialize the camera with the laptop's webcam
+    function initCamera(isUsingIP) {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
         }
-    });
+        
+        if (!isUsingIP) {
+            // Show the webcam video and hide the IP camera video
+            // document.getElementById("webcamVideo").style.display = "block";
+            document.getElementById("canvas").style.display = "block";
 
-    document.getElementById("saveVideo").addEventListener("click", () => {
-        // Trigger the download of the recorded video
-        const a = document.createElement("a");
-        a.href = "/get_video";
-        a.download = "recorded_video.webm";
-        a.click();
-    });
+            // document.getElementById("canvas").style.display = "block";
+            document.getElementById("ipCameraVideo").style.display = "none";
+            
+            navigator.mediaDevices
+                .getUserMedia({ video: { facingMode: "environment" }, audio: true })
+                .then((newStream) => {
+                    stream = newStream;
+                    videoElement.srcObject = newStream;
+                    mediaRecorder = new MediaRecorder(newStream);
+                    mediaRecorder.ondataavailable = (e) => {
+                        if (e.data.size > 0) {
+                            recordedChunks.push(e.data);
+                        }
+                    };
+                })
+                .catch((error) => {
+                    console.error("Error accessing webcam:", error);
+                });
+        } else {
+            // Show the IP camera video and hide the webcam video
+            // document.getElementById("webcamVideo").style.display = "none";
+            document.getElementById("canvas").style.display = "none";
+            // document.getElementById("canvas").style.display = "none";
+            document.getElementById("ipCameraVideo").style.display = "block";
+            
+            // You can set the src or srcObject for the IP camera video here
+            // Example: document.getElementById("ipCameraVideo").src = ipCameraUrl;
+        }
+    }
 
+    function switchCamera() {
+        usingIPCamera = !usingIPCamera;
+        initCamera(usingIPCamera);
+        toggleCameraText(usingIPCamera);
+        // Gửi thông tin chuyển đổi camera về server
+        fetch('/change_camera', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ isUsingIPCamera: usingIPCamera })
+        }).then(response => response.json())
+          .then(data => {
+              console.log(data.message);
+              // Cập nhật nguồn video trên giao diện người dùng
+              if (usingIPCamera) {
+                  // Đối với IP camera, có thể cần logic xử lý khác để lấy stream
+              } else {
+                  // Đối với webcam, bạn có thể cần refresh nguồn stream
+                  initCamera(false);
+              }
+          }).catch(error => {
+              console.error('Error switching camera source:', error);
+          });
+    }
 
-    // notification
-    const notification = document.getElementById('notification');
-        notification.addEventListener('click', function () {
-            this.classList.toggle('active');
+    document.getElementById('switchCameraButton').addEventListener('click', switchCamera);
+
+    // Rest of your code for capturing and processing frames
+    function captureFrame() {
+        context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(processImage);
+    }
+
+    function processImage(blob) {
+        const formData = new FormData();
+        formData.append("image_blob", blob);
+
+        fetch('/process-image', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(data => {
+    const grayImageBase64 = data.gray_image;
+    // Convert the base64 string to a data URL
+    const imageDataUrl = 'data:image/jpeg;base64,' + grayImageBase64;
+    // Create a new Image object
+    const image = new Image();
+    image.onload = function () {
+        // Draw the image onto the canvas
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    };
+    // Set the source of the image object to the data URL
+    image.src = imageDataUrl;
+})
+        .catch(error => {
+            console.error('Error processing image:', error);
         });
-</script>   
+    }
+
+    setInterval(captureFrame, 400);  // Process the frame every 400ms
+
+</script>
 {% endblock %}

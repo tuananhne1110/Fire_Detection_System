@@ -10,16 +10,12 @@
 <div class="sign-in-container bottom-space">
   <div class="sign-in-container">
       <h3>Login Here</h3>
-
           <label for="username">Username</label>
           <!-- <input type="text" placeholder="Email or Phone" id="username"> -->
           <input type="text" name="username" placeholder="Email or Phone" id="username">
-
           <label for="password">Password</label>
           <input type="password" placeholder="Password" name="password">
-
           <button id="signin-button" type ="submit">Log In</button>
-
   </div>
 </div>
 </form>
@@ -29,4 +25,5 @@
 </div>
 
 <script src="{{ url_for('static', filename='signin.js') }}"></script>
+
 {% endblock %}

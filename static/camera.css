@@ -30,6 +30,7 @@ body {
     align-items: center; 
     margin-top: 60px;
   } */
+
 .video_display_container {
     display: flex;
     flex-direction: column; 
@@ -37,13 +38,13 @@ body {
     margin-top: 100px;
 }
 
-#video {
+/* #video {
     display: flex;
     align-items: center;
     border: 2px solid #9fe7f5;
     border-radius: 5px;
     box-shadow: 2px 2px 5px #888;
-}
+} */
 
 /* BUTTON *//* BUTTON *//* BUTTON */
 /* BUTTON *//* BUTTON *//* BUTTON */
@@ -53,12 +54,12 @@ body {
 #switching{
     margin-bottom: 50PX;
 }
-#button-s{
+#switchCameraButton{
     background-color: None;
     background-color: rgb(17, 17, 132);
     margin-bottom: 50px;
     color: #FFFFCC;
-    padding: 2vh;
+    padding: 1.5vh;
 }
 /* BUTTON WORKING */
 .button-l {
@@ -78,6 +79,9 @@ body {
     background-color: #fb8332;
     box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
   }
+/* NOTIFICATION *//* NOTIFICATION *//* NOTIFICATION */
+/* NOTIFICATION *//* NOTIFICATION *//* NOTIFICATION */
+/* NOTIFICATION *//* NOTIFICATION *//* NOTIFICATION */
 
 /* 
 .notification {
@@ -117,3 +121,22 @@ body {
 .notification-dropdown {
     margin-top: 5px;
 } */
+/* WEB-IP *//* WEB-IP *//* WEB-IP */
+/* WEB-IP *//* WEB-IP *//* WEB-IP */
+/* WEB-IP *//* WEB-IP *//* WEB-IP */
+
+.web_cam_cont{
+    display: inline;
+    align-items: center;
+    border: 2px solid #9fe7f5;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px #888;
+}
+
+#ipCameraVideo{
+    display: flex;
+    align-items: center;
+    border: 2px solid #ef6ad7;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px #888;
+}

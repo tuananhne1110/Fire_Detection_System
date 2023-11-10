@@ -22,12 +22,10 @@
 
 #home_logo_box {
   display: flex;
-  width: 80px;
+  align-items: center;
+  justify-content: center;
 }
 
-#home_logo {
-  margin-bottom: 2px;
-}
 
 #navbar li a {
   color: #fff;

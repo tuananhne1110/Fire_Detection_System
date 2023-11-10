@@ -14,18 +14,25 @@
     {% block additional_css %}{% endblock %}
 
 
-
-
 </head>
 <body>
     <div id="main">
       <nav id="header">
         <ul id="navbar" class="ml-auto"> <!-- Use Bootstrap class "ml-auto" to align to the right -->
-          <li class="nav-item" id="home_logo_box"><a class="nav-link" href="/home"><img src="..//static//Yellow and Blue Brush Lifestyle Vlog Youtube Thumbnail.ico" id="home_logo_" alt="", style="max-width: 40px;max-height: 40px;"></a></li>
-          <!-- <li class="nav-item" id="home_logo"><a class="nav-link" href="/home">Home</i></a></li> -->
+          <li class="nav-item" id="home_logo_box"><a class="nav-link" href="/home"><img src="..//static//Yellow and Blue Brush Lifestyle Vlog Youtube Thumbnail.ico" alt="", style="max-width: 50px;max-height: 50px;"></a></li>
+          
           <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Demo</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('camera') }}" id="live-camera">Live Camera</a></li> 
-          <li class="nav-item" id="signin-link"><a class="nav-link" href="{{ url_for('signin') }}" >Sign in</a></li>
+         
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('camera') }}" id="live-camera">Live Camera</a>
+          </li>
+
+          <li class="nav-item" id="signin-link"><a class="nav-link" href="{{ url_for('signin') }}" >Sign In</a></li>
+          
+        
+        
+        
+          
         </ul>
       </nav>
     </div>
@@ -132,20 +139,20 @@
     window.location.href = "/signin"
   }
 // 22/10
-
-  function updateSignInText() {
-    const signInLink = document.getElementById("signin-link");
-    if (signInLink) {
-        const username = signInLink.getAttribute("data-username");
-        if (username) {
-            signInLink.querySelector("a").textContent = username;
+    function updateSignInText() {
+        const signInLink = document.getElementById("signin-link");
+        if (signInLink) {
+            const username = signInLink.getAttribute("data-username");
+            if (username) {
+                signInLink.querySelector("a").textContent = username;
+            }
         }
     }
-}
 
-  // Call the function when the page loads
-  window.addEventListener("load", updateSignInText);
-  document.getElementById("signin-link").setAttribute("data-username", "{{ username }}");
+    // Call the function when the page loads
+    window.addEventListener("load", updateSignInText);
+    document.getElementById("signin-link").setAttribute("data-username", "{{ username }}");
+
 
 // 22/10
 </script>

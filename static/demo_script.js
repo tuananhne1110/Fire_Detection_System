@@ -4,8 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const originalImageContainer = document.getElementById("originalImageContainer");
     const fileInput = document.getElementById("fileInput");
     const inputContainer = document.getElementById("image-container-Ori");
+    const outputContainer = document.getElementById("image-container-Gra");
+    const loader = document.getElementById("loader"); // Loader element
 
-    
     dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
         dropZone.classList.add('drag-over');
@@ -36,14 +37,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function appendInputData(el) {
         let inputData = document.getElementById("inputDataEl");
+        let inputData1 = document.getElementById("originalImageContainer")
         if (inputData) {
             inputContainer.removeChild(inputData);
         }
         inputContainer.appendChild(el);
-        inputContainer.scrollIntoView(true, { behavior: 'smooth', block: "center" }); 
+        inputData1.scrollIntoView({block :'center'}); 
     }
 
-    
+    function renderOutput(filename, type = "image") {
+        let existEl = document.getElementById("output-el")
+        if (existEl) {
+            outputContainer.removeChild(existEl)
+        }
+        let outputEl = document.createElement(type == "image" ? "img" : "video")
+        outputEl.id = "output-el"
+        if (type == "video") {
+            outputEl.controls = "controls";
+        }
+        outputEl.src = filename
+        outputContainer.appendChild(outputEl)
+    }
+
     function sendDataToModel(file, type = "image") {
         let url
         let fetchObj = {
@@ -51,30 +66,36 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         const formData = new FormData();
         formData.append('data', file); 
+
+        loader.style.display = 'block';
+
         if (type == "image") {
             url = "/process-image"
             fetchObj["body"] = formData
         } else {
+            type = "video"
             url = "/upload-video"
             fetchObj["body"] = formData
         }
-        fetch(url, fetchObj);
+        fetch(url, fetchObj)
+            .then(res => res.json())
+            .then(data => {
+                let filename = data.filename;
+                console.log('Processing completed', data);
+
+                // Hide the loader after processing is done
+                loader.style.display = 'none';
+
+                renderOutput(filename, type);
+            })
+            .catch(error => {
+                console.error('Error during processing', error);
+
+                // Hide the loader in case of an error
+                loader.style.display = 'none';
+            });
     }
 
-    function displayVideo(files) {
-        const file = files[0];
-        const videoURL = URL.createObjectURL(file);
-
-        originalImageContainer.style.display = "flex";
-        originalImageContainer.style.flexDirection = "column";
-        originalImageContainer.style.justifyContent = "space-between";
-
-        let videoEl = document.createElement("video");
-        videoEl.src = videoURL;
-        videoEl.id = "inputDataEl";
-        videoEl.controls = "controls";
-        appendInputData(videoEl);
-    }
 
     function handleFile(files) {
         if (files.length > 1) {
@@ -106,4 +127,20 @@ document.addEventListener("DOMContentLoaded", function () {
             reader.readAsDataURL(file);
         }
     }
+    function displayVideo(files) {
+        const file = files[0];
+        const videoURL = URL.createObjectURL(file);
+
+        originalImageContainer.style.display = "flex";
+        originalImageContainer.style.flexDirection = "row";
+        originalImageContainer.style.justifyContent = "space-between";
+
+        let videoEl = document.createElement("video");
+        videoEl.src = videoURL;
+        videoEl.id = "inputDataEl";
+        videoEl.controls = "controls";
+        appendInputData(videoEl);
+    }
+
 });
+
