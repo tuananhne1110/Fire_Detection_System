@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fire Detection</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    
-    <link href="{{ url_for('static', filename='base.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
     <!-- logo -->
-    <link rel="shortcut icon" type="image/x-icon" href="..//static//Yellow and Blue Brush Lifestyle Vlog Youtube Thumbnail.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="./static/img/logoFIRE.ico" />
 
     {% block additional_css %}{% endblock %}
 
@@ -19,25 +19,20 @@
     <div id="main">
       <nav id="header">
         <ul id="navbar" class="ml-auto"> <!-- Use Bootstrap class "ml-auto" to align to the right -->
-          <li class="nav-item" id="home_logo_box"><a class="nav-link" href="/home"><img src="..//static//Yellow and Blue Brush Lifestyle Vlog Youtube Thumbnail.ico" alt="", style="max-width: 50px;max-height: 50px;"></a></li>
-          
+          <li class="nav-item" id="home_logo_box"><a class="nav-link" href="/home"><img src="./static/img/logoFIRE.ico" alt="", style="max-width: 50px;max-height: 50px;"></a></li>
+
           <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Demo</a></li>
-         
+
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('camera') }}" id="live-camera">Live Camera</a>
           </li>
 
-          <li class="nav-item" id="signin-link"><a class="nav-link" href="{{ url_for('signin') }}" >Sign In</a></li>
-          
-        
-        
-        
-          
+
         </ul>
       </nav>
     </div>
-    
-    
+
+
     {% block content %}
 
 
@@ -47,7 +42,7 @@
           <p>Welcome to our deep learning project dedicated to enhancing fire detection in real-time using cameras. We are a team of passionate and driven university students, coming together to make a meaningful impact on fire safety. Our project is a manifestation of our commitment to leveraging cutting-edge technology to improve safety measures in a variety of environments.</p>
       </div>
     </div>
-    
+
     <div class="about_us_column" >
       <div class="about_us_column_text" >
         <h3>Our Mission</h3>
@@ -60,7 +55,7 @@
         </video>
       </div>
     </div>
-  
+
   </div>
     {% endblock %}
 </body>
@@ -75,7 +70,7 @@
     <div class="flex flex-row">
     <div class="foot_column1" id="foot_content1">
       <h3 class="khanh_img">
-        <img src="..//static//Yellow and Blue Brush Lifestyle Vlog Youtube Thumbnail.ico" alt="", style="max-width: 12%;max-height: 12%;">
+        <img src="./static/logoFIRE.ico" alt="", style="max-width: 12%;max-height: 12%;">
       </h3>
         <h4 class="logo_content">We are a dynamic team of dedicated university students on a mission to advance fire detection using cutting-edge technology. Our passion and commitment drive us as we work tirelessly to enhance fire safety in diverse environments. Welcome to our deep learning project, where we're making real-time fire detection with cameras a reality.</h4>
     </div>
@@ -114,7 +109,7 @@
         <li class="foot_list_list">
           <a href="" class="foot_list_list_item">
             <i class="foot_list_icon fa-brands fa-linkedin"></i>
-            Linkendin
+            Linkedin
           </a>
         </li>
         <li class="foot_list_list">
@@ -136,7 +131,7 @@
   console.log(cameraLink)
   cameraLink.onclick = (event) => {
     event.preventDefault()
-    window.location.href = "/signin"
+    window.location.href = "/camera"
   }
 // 22/10
     function updateSignInText() {
