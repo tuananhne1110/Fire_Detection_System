@@ -15,18 +15,7 @@
         <button id="switchCameraButton" class="button-l" role="button">Switch IP Camera ~ Webcam</button>
     </div>
     <div class="video-wrapper" id="camera-wrapper">
-        <!-- Hide the IP camera video initially -->
-        <!-- <p id="ipCameraText" class="camera-text" style="display: none">IP-CAM</p> -->
-        <!-- <p id="webcamText" class="camera-text" style="display: block">WEB-CAM</p> -->
         <img class="web_cam_cont" id="camera-feed" src="{{ url_for('webcam_feed') }}" style="display: block; z-index: 9999999;"></img>
-
-        <!-- <video class="web_cam_cont" id="ipCameraVideo"  width="640" height="480" src="{{ url_for('video_feed') }}" autoplay playsinline style="display: none;"></video> -->
-        <!-- <img  id="ipCameraVideo" src="{{ url_for('video_feed') }}" width="640" height="480" autoplay playsinline> -->
-
-        <!-- webcam -->
-        <!-- <video class="web_cam_cont" id="webcamVideo" width="640" height="480" autoplay style="display: block"></video> -->
-        <!-- <canvas class="web_cam_cont" id="canvas" width="640" height="480" autoplay  style="display: block"></canvas> -->
-
     </div>
     <!-- Other elements for recording and processing -->
 </div>
@@ -43,7 +32,7 @@
     let usingIPCamera = false;
     let stream;
 
-    const ipCameraUrl = 'rtsp://admin:Ditmemay1@192.168.2.11:554/onvif1';
+    const ipCameraUrl = 'rtsp://admin:Ditmemay1@192.168.1.173:554/onvif1';
     // text
     function toggleCameraText(usingIPCamera) {
     const ipCameraText = document.getElementById("ipCameraText");
@@ -76,70 +65,11 @@
         newImgEl.src = url
 
         camWrapper.appendChild(newImgEl)
-        // <img class="web_cam_cont" id="camera-feed" src="{{ url_for('webcam_feed') }}" style="display: block; z-index: 9999999;"></img>
-        // if (stream) {
-        //     stream.getTracks().forEach(track => track.stop());
-        // }
-
-        // if (!isUsingIP) {
-        //     // Show the webcam video and hide the IP camera video
-        //     // document.getElementById("webcamVideo").style.display = "block";
-        //     document.getElementById("canvas").style.display = "block";
-
-        //     // document.getElementById("canvas").style.display = "block";
-        //     document.getElementById("ipCameraVideo").style.display = "none";
-
-        //     navigator.mediaDevices
-        //         .getUserMedia({ video: { facingMode: "environment" }, audio: true })
-        //         .then((newStream) => {
-        //             stream = newStream;
-        //             videoElement.srcObject = newStream;
-        //             mediaRecorder = new MediaRecorder(newStream);
-        //             mediaRecorder.ondataavailable = (e) => {
-        //                 if (e.data.size > 0) {
-        //                     recordedChunks.push(e.data);
-        //                 }
-        //             };
-        //         })
-        //         .catch((error) => {
-        //             console.error("Error accessing webcam:", error);
-        //         });
-        // } else {
-        //     // Show the IP camera video and hide the webcam video
-        //     // document.getElementById("webcamVideo").style.display = "none";
-        //     document.getElementById("canvas").style.display = "none";
-        //     // document.getElementById("canvas").style.display = "none";
-        //     document.getElementById("ipCameraVideo").style.display = "block";
-
-        //     // You can set the src or srcObject for the IP camera video here
-        //     // Example: document.getElementById("ipCameraVideo").src = ipCameraUrl;
-        // }
     }
 
     function switchCamera() {
         usingIPCamera = !usingIPCamera;
         initCamera(usingIPCamera);
-        // toggleCameraText(usingIPCamera);
-        // // Gửi thông tin chuyển đổi camera về server
-        // fetch('/change_camera', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ isUsingIPCamera: usingIPCamera })
-        // }).then(response => response.json())
-        //   .then(data => {
-        //       console.log(data.message);
-        //       // Cập nhật nguồn video trên giao diện người dùng
-        //       if (usingIPCamera) {
-        //           // Đối với IP camera, có thể cần logic xử lý khác để lấy stream
-        //       } else {
-        //           // Đối với webcam, bạn có thể cần refresh nguồn stream
-        //           initCamera(false);
-        //       }
-        //   }).catch(error => {
-        //       console.error('Error switching camera source:', error);
-        //   });
     }
 
     document.getElementById('switchCameraButton').addEventListener('click', switchCamera);

@@ -15,7 +15,6 @@ import shutil
 import threading
 import queue
 from threading import Timer
-# from pathlib import Path
 
 
 # Email Configuration
@@ -31,9 +30,10 @@ formatted_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 # Path
 FOLDER_NOW_PATH = './uploads'
-model = YOLO("./bestv8_2.pt")
+model = YOLO("./best.pt")
 os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
-url = 'rtsp://admin:Ditmemay1@192.168.2.11:554/onvif1'
+url = 'rtsp://admin:Ditmemay1@192.168.1.173:554/onvif1'
+
 
 class ImageProcessor:
     def __init__(self, file):
@@ -43,11 +43,11 @@ class ImageProcessor:
         print(' process image is running')
         try:
 
-            # Đọc file ảnh và chuyển đổi nó thành numpy array
+            # Read image file and convert it to numpy array
             image_np = np.frombuffer(self.file.read(), np.uint8)
             image = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
 
-            # Xử lý ảnh tùy chỉnh (ví dụ: chuyển đổi sang ảnh xám, nhận diện vật thể, v.v.)
+            # Predict Image
             g_image, is_detected = predict_image(image)
 
             return g_image, is_detected
@@ -58,12 +58,12 @@ class ImageProcessor:
 
 
 class VideoProcessor:
-    print('video processor is running')
+    print('Video processor is running')
+
     def __init__(self, filename):
         self.filename = filename
 
     def process(self):
-        # print(' processing video is running')
         try:
             cap = cv2.VideoCapture(self.filename)
             processed_frames = []
@@ -73,28 +73,27 @@ class VideoProcessor:
                 if not ret:
                     break
 
-                # Xử lý khung hình ở đây bằng cách sử dụng predict_image
+                # Process the frames using predict_image
                 processed_frame, detected = predict_image(frame)
 
                 processed_frames.append(processed_frame)
 
             cap.release()
 
-            # Lưu video tạm thời
+            # Save video temporarily
             temp_output_path = os.path.join(os.path.dirname("."), "uploads", "temp_" + os.path.basename(self.filename))
             out = cv2.VideoWriter(temp_output_path, cv2.VideoWriter_fourcc(*'mp4v'), 20.0, (640, 480))
             for pf in processed_frames:
                 out.write(pf)
             out.release()
 
-            # Chuyển đổi video để tối ưu cho web
+            # Convert videos to optimize for the web
             final_output_path = os.path.join(os.path.dirname("."),
                                              "static", "processed_" + os.path.basename(self.filename))
             convert_video_for_web(temp_output_path, final_output_path)
 
             return final_output_path
         except Exception as e:
-            # print('Error with type of video')
             print(e)
             return None
 
@@ -139,13 +138,12 @@ last_frame = None
 def update_last_frame():
     global last_frame
     q = queue.Queue()
-    url = 'rtsp://admin:Ditmemay1@192.168.2.11:554/onvif1'
+    url = 'rtsp://admin:Ditmemay1@192.168.1.173:554/onvif1'
     cap = cv2.VideoCapture(url, cv2.CAP_FFMPEG)
 
     while True:
         ret, frame = cap.read()
         if not ret:
-            # print("vai ca loz")
             continue
         last_frame = frame
         try:
@@ -182,7 +180,7 @@ def predict_image(image_input):
         boxes = info.boxes
         for box in boxes:
             confidence = math.ceil(box.conf[0] * 100)
-            if confidence > 50:
+            if confidence > 30:
                 x1, y1, x2, y2 = map(int, box.xyxy[0])
                 cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 5)
                 cvzone.putTextRect(img, f'Fire {confidence}%', [x1 + 8, y1 + 100], scale=1.5, thickness=2)
@@ -195,13 +193,7 @@ def gen_frames():  # generate frame by frame from RTSP stream
     global last_frame
     global email_flag
     print('gen_frames is running')
-    # url = 'rtsp://admin:Ditmemay1@192.168.1.173:554/onvif1'
-    # # Open the RTSP stream
-    # cap = cv2.VideoCapture(url, cv2.CAP_FFMPEG)
-    #
-    # if not cap.isOpened():
-    #     print("Error opening video stream")
-    # # try_reconnect_count = 0
+
     while True:
         # success, frame = cap.read()  # read the camera frame
         frame = last_frame
@@ -212,12 +204,13 @@ def gen_frames():  # generate frame by frame from RTSP stream
                 print("Failed to grab frame")
                 break
         else:
-            frame, is_detected = predict_image(frame) # is_predict use for sending warming email, when is_detected = 1 then send email
-            if is_detected == 1 and email_flag == 0: # If a bounding box was detected
+            # is_detected use for sending warming email, when is_detected = 1 then send email
+            frame, is_detected = predict_image(frame)
+            if is_detected == 1 and email_flag == 0:  # If a bounding box was detected
                 print('prepare sending email')
                 send_warning_email(frame)
                 email_flag = 1 
-                timer = Timer(300,reset_email_flag)
+                timer = Timer(300, reset_email_flag)
                 timer.start
                 print(" passed sending email")
             # else:
@@ -247,15 +240,12 @@ def gen_frames_webcam():  # generate frame by frame from laptop webcam
             break  # If error in capturing frame, break loop
 
         frame, is_detected = predict_image(frame)  # Process frame for bounding box
-        if is_detected == 1 and email_flag == 0: # If a bounding box was detected
+        if is_detected == 1 and email_flag == 0:  # If a bounding box was detected
             send_warning_email(frame)
             email_flag = 1 
-            timer = Timer(300,reset_email_flag)
+            timer = Timer(300, reset_email_flag)
             timer.start
             print(" passed sending email")
-
-        # else:
-        #     print( 'con cac')        
 
         ret, buffer = cv2.imencode('.jpg', frame)
         if not ret:
@@ -269,16 +259,15 @@ def gen_frames_webcam():  # generate frame by frame from laptop webcam
     print("passed gen_frames_webcam")
 
 
-
 ffmpeg_path = shutil.which('ffmpeg')
 
 
 def convert_video_for_web(input_path, output_path):
     print('convert_video_for_web is running')
     try:
-        # Chuyển đổi video với codec H.264 và đóng gói trong container MP4.
-        # Thêm âm thanh giả định nếu video không có âm thanh.
-        # Sử dụng 'faststart' để di chuyển MOOV atom đến đầu file (tối ưu cho việc phát trực tuyến).
+        # Convert videos with H.264 codec and package in MP4 container.
+        # Add fake audio if video has no audio.
+        # Use 'faststart' to move the MOOV atom to the beginning of the file (optimal for streaming).
         (
             ffmpeg
             .input(input_path)

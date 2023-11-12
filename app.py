@@ -7,16 +7,18 @@ import base64
 from ultralytics import YOLO
 from datetime import datetime
 from build_function import ImageProcessor, VideoProcessor, gen_frames, gen_frames_webcam
-from threading import Timer
 os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SESSION_TYPE'] = 'filesystem'
 
+
 Session(app)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 # Email Configuration
 email_flag = 0
@@ -31,10 +33,9 @@ formatted_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 # Path
 FOLDER_NOW_PATH = './uploads'
-model = YOLO("./bestv8_2.pt")
+model = YOLO("./best.pt")
 os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
-url = 'rtsp://admin:Ditmemay1@192.168.2.11:554/onvif1'
-# Import các đối tượng Image và Video từ file riêng
+url = 'rtsp://admin:Ditmemay1@192.168.1.173:554/onvif1'
 
 
 @app.route('/')
@@ -55,23 +56,16 @@ def process_image():
     try:
         image = request.files['data']
         if image:
-            # Lưu ảnh gốc tạm thời
+            # Save the original image temporarily
             original_filename = os.path.join(os.path.dirname("."), "static", image.filename)
             image.save(original_filename)
 
-            # Xử lý ảnh qua ImageProcessor
+            # Process images via ImageProcessor
             with open(original_filename, 'rb') as file:
                 image_processor = ImageProcessor(file)
                 g_image, is_detected = image_processor.process()
 
-            # (Optional) Handling email sending and flags
-            # if is_detected and email_flag == 0:
-            #     send_warning_email(g_image)
-            #     email_flag = 1
-            #     timer = Timer(300, reset_email_flag)
-            #     timer.start()
-
-            # Lưu ảnh đã xử lý
+            # Save the processed image
             processed_filename = "processed_" + image.filename
             processed_filepath = os.path.join(os.path.dirname("."), "static", processed_filename)
             cv2.imwrite(processed_filepath, g_image)
@@ -126,14 +120,14 @@ def testcam():
 @app.route('/upload-video', methods=['POST'])
 def upload_video():
 
-    print( " upload video is running")
+    print(" upload video is running")
     if 'data' not in request.files:
-        return jsonify({'error': 'Không có phần video'})
+        return jsonify({'error': 'There is no video section'})
 
     video = request.files['data']
 
     if video.filename == '':
-        return jsonify({'error': 'Chưa chọn tệp video'})
+        return jsonify({'error': 'The video file is not selected'})
 
     if video and allowed_file(video.filename):
         filename = os.path.join(os.path.dirname("."), "static", video.filename)
@@ -142,10 +136,10 @@ def upload_video():
 
         video_processor = VideoProcessor(filename)
         processed_filename = video_processor.process()
-        print('passed upload_video')
-        return jsonify({'message': 'Video đã được tải lên và xử lý thành công', 'filename': processed_filename})
+        print('Passed upload_video')
+        return jsonify({'message': 'The video has been uploaded and processed successfully', 'filename': processed_filename})
 
-    return jsonify({'error': 'Định dạng tệp không hợp lệ'})
+    return jsonify({'error': 'Invalid file format'})
 
 
 def allowed_file(filename):
