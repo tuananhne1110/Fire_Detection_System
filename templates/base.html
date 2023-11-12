@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    
+    <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <!-- logo -->
+    <link rel="shortcut icon" type="image/x-icon" href="./static/img/logoFIRE.ico" />
+
+    {% block additional_css %}{% endblock %}
+
+
+</head>
+<body>
+    <div id="main">
+      <nav id="header">
+        <ul id="navbar" class="ml-auto"> <!-- Use Bootstrap class "ml-auto" to align to the right -->
+          <li class="nav-item" id="home_logo_box"><a class="nav-link" href="/home"><img src="./static/img/logoFIRE.ico" alt="", style="max-width: 50px;max-height: 50px;"></a></li>
+
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Demo</a></li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('camera') }}" id="live-camera">Live Camera</a>
+          </li>
+
+
+        </ul>
+      </nav>
+    </div>
+
+
+    {% block content %}
+
+
+    <div id="about-us-container">
+      <div id="about-us">
+          <h2>About Us</h2>
+          <p>Welcome to our deep learning project dedicated to enhancing fire detection in real-time using cameras. We are a team of passionate and driven university students, coming together to make a meaningful impact on fire safety. Our project is a manifestation of our commitment to leveraging cutting-edge technology to improve safety measures in a variety of environments.</p>
+      </div>
+    </div>
+
+    <div class="about_us_column" >
+      <div class="about_us_column_text" >
+        <h3>Our Mission</h3>
+        <p class="about_us_column_text_script">In a world where fire incidents can have devastating consequences, our mission is to create a system that empowers individuals and organizations to detect fires as early as possible. By utilizing camera-based fire detection, we aim to offer a wide-ranging solution suitable for large spaces, warehouses, and any area where traditional smoke detection systems might fall short. Our primary focus is on ensuring the safety and well-being of people and their assets, and we believe that early fire detection is an essential step in achieving this goal.</p>
+      </div>
+      <div class="about_us_column_img" >
+        <video width="640" height="360" id="about_us_video" controls>
+          <source src="./static/flame.mp4"  type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+  </div>
+    {% endblock %}
+</body>
+
+
+
+<!-- FOOTER --><!-- FOOTER --><!-- FOOTER -->
+<!-- FOOTER --><!-- FOOTER --><!-- FOOTER -->
+<!-- FOOTER --><!-- FOOTER --><!-- FOOTER -->
+<footer>
+  <div class="footer">
+    <div class="flex flex-row">
+    <div class="foot_column1" id="foot_content1">
+      <h3 class="khanh_img">
+        <img src="./static/logoFIRE.ico" alt="", style="max-width: 12%;max-height: 12%;">
+      </h3>
+        <h4 class="logo_content">We are a dynamic team of dedicated university students on a mission to advance fire detection using cutting-edge technology. Our passion and commitment drive us as we work tirelessly to enhance fire safety in diverse environments. Welcome to our deep learning project, where we're making real-time fire detection with cameras a reality.</h4>
+    </div>
+    <div class="foot_column" id="foot_content2">
+      <h3>Contacts</h3>
+      <ul class="foot_list">
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fa-solid fa-location-dot"></i>
+            Khu Đô thị mới An Phú Thịnh, P. Nhơn Bình, TP. Quy Nhơn, Bình Định
+          </a>
+        </li>
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fa-solid fa-phone"></i>
+            09123456789
+          </a>
+        </li>
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fa-solid fa-envelope"></i>
+            Mail
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="foot_column2" id="foot_content3">
+      <h3>Follow us</h3>
+      <ul class="foot_list">
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fab fa-facebook"></i>
+            Facebook
+          </a>
+        </li>
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fa-brands fa-linkedin"></i>
+            Linkedin
+          </a>
+        </li>
+        <li class="foot_list_list">
+          <a href="" class="foot_list_list_item">
+            <i class="foot_list_icon fa-brands fa-github"></i>
+            Git hub
+          </a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="copyright">
+      Copyright @2023
+    </div>
+  </div>
+</footer>
+<script>
+  let cameraLink = document.getElementById("live-camera")
+  console.log(cameraLink)
+  cameraLink.onclick = (event) => {
+    event.preventDefault()
+    window.location.href = "/camera"
+  }
+// 22/10
+    function updateSignInText() {
+        const signInLink = document.getElementById("signin-link");
+        if (signInLink) {
+            const username = signInLink.getAttribute("data-username");
+            if (username) {
+                signInLink.querySelector("a").textContent = username;
+            }
+        }
+    }
+
+    // Call the function when the page loads
+    window.addEventListener("load", updateSignInText);
+    document.getElementById("signin-link").setAttribute("data-username", "{{ username }}");
+
+
+// 22/10
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+</html>

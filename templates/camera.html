@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block additional_css %}
+<link href="{{ url_for('static', filename='css/camera.css') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+{% block content %}
+<div class="center-container">
+    <p class="introWords">Live Cam</p>
+    <p class="introWords1">Detect where is the fire in the camera in real-time</p>
+</div>
+
+<div class="video_display_container" id="video_display_big_cont">
+    <div>
+        <button id="switchCameraButton" class="button-l" role="button">Switch IP Camera ~ Webcam</button>
+    </div>
+    <div class="video-wrapper" id="camera-wrapper">
+        <img class="web_cam_cont" id="camera-feed" src="{{ url_for('webcam_feed') }}" style="display: block; z-index: 9999999;"></img>
+    </div>
+    <!-- Other elements for recording and processing -->
+</div>
+
+<script>
+
+    let mediaRecorder;
+    let recordedChunks = [];
+    // const videoElement = document.getElementById("webcamVideo");
+    const videoElement = document.getElementById("canvas");
+
+
+    // const video1Element = document.getElementById("canvas");
+    let usingIPCamera = false;
+    let stream;
+
+    const ipCameraUrl = 'rtsp://admin:Ditmemay1@192.168.1.173:554/onvif1';
+    // text
+    function toggleCameraText(usingIPCamera) {
+    const ipCameraText = document.getElementById("ipCameraText");
+    const webcamText = document.getElementById("webcamText");
+
+    if (usingIPCamera) {
+        ipCameraText.style.display = "block";
+        webcamText.style.display = "none";
+    } else {
+        ipCameraText.style.display = "none";
+        webcamText.style.display = "block";
+        }
+    }
+
+    // Initialize the camera with the laptop's webcam
+    function initCamera(isUsingIP) {
+        let camWrapper = document.getElementById("camera-wrapper")
+        let oldImgEl = document.getElementById("camera-feed")
+        camWrapper.removeChild(oldImgEl)
+
+        let newImgEl = document.createElement("img")
+        newImgEl.className = "web_cam_cont"
+        newImgEl.id = "camera-feed"
+        newImgEl.style.display = "block"
+        newImgEl.style.zIndex = 999999
+
+        let webcamUrl = "/webcam_feed"
+        let ipCamUrl = "/video_feed"
+        let url = isUsingIP ? ipCamUrl : webcamUrl
+        newImgEl.src = url
+
+        camWrapper.appendChild(newImgEl)
+    }
+
+    function switchCamera() {
+        usingIPCamera = !usingIPCamera;
+        initCamera(usingIPCamera);
+    }
+
+    document.getElementById('switchCameraButton').addEventListener('click', switchCamera);
+
+    // Rest of your code for capturing and processing frames
+    function captureFrame() {
+        console.log('no dang cat anh ne')
+        context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(processImage);
+    }
+
+    function processImage(blob) {
+        const formData = new FormData();
+        formData.append("image_blob", blob);
+
+        fetch('/process-image', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(data => {
+    const grayImageBase64 = data.gray_image;
+    // Convert the base64 string to a data URL
+    const imageDataUrl = 'data:image/jpeg;base64,' + grayImageBase64;
+    // Create a new Image object
+    console.log('no tra ve image de ve~ ra canvas r ne');
+    const image = new Image();
+    image.onload = function () {
+        // Draw the image onto the canvas
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    };
+    // Set the source of the image object to the data URL
+    image.src = imageDataUrl;
+        })
+        .catch(error => {
+            console.error('Error processing image:', error);
+        });
+    }
+
+    setInterval(captureFrame, 400);  // Process the frame every 400ms
+
+</script>
+{% endblock %}
