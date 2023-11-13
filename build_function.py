@@ -178,12 +178,17 @@ def predict_image(image_input):
     # Draw bounding boxes and confidence scores on detected fires
     for info in results:
         boxes = info.boxes
+
         for box in boxes:
-            confidence = math.ceil(box.conf[0] * 100)
+            confidence = box.conf[0]
+            confidence = math.ceil(confidence * 100)
+            Class = int(box.cls[0])
             if confidence > 30:
-                x1, y1, x2, y2 = map(int, box.xyxy[0])
+                x1, y1, x2, y2 = box.xyxy[0]
+                x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
                 cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 5)
-                cvzone.putTextRect(img, f'Fire {confidence}%', [x1 + 8, y1 + 100], scale=1.5, thickness=2)
+                cvzone.putTextRect(img, f'{classnames[Class]} {confidence}%', [x1 + 8, y1 + 100],
+                                   scale=1.5, thickness=2)
                 detected = 1  # Set the flag to True if a bounding box was detected
 
     return img, detected
