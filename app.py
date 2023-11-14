@@ -24,9 +24,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 email_flag = 0
 smtp_port = 587
 smtp_server = "smtp.gmail.com"
-email_from = "truongnnse173216@fpt.edu.vn"
-email_list = ["masayukibalad@gmail.com"]
-pswd = 'fzkg nyoa oeaa wyis'
+email_from = "anhnvtse172362@fpt.edu.vn"
+email_list = ["ngovutuananh1110@gmail.com", 'trietnbse173607@fpt.edu.vn']
+pswd = 'wntt rpty reqq yjsl'
 subject = "WARNING"
 formatted_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
@@ -119,7 +119,6 @@ def testcam():
 
 @app.route('/upload-video', methods=['POST'])
 def upload_video():
-
     print(" upload video is running")
     if 'data' not in request.files:
         return jsonify({'error': 'There is no video section'})
@@ -137,7 +136,8 @@ def upload_video():
         video_processor = VideoProcessor(filename)
         processed_filename = video_processor.process()
         print('Passed upload_video')
-        return jsonify({'message': 'The video has been uploaded and processed successfully', 'filename': processed_filename})
+        return jsonify({'message': 'The video has been uploaded and processed successfully',
+                        'filename': processed_filename})
 
     return jsonify({'error': 'Invalid file format'})
 
