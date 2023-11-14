@@ -21,9 +21,9 @@ from threading import Timer
 email_flag = 0
 smtp_port = 587
 smtp_server = "smtp.gmail.com"
-email_from = "truongnnse173216@fpt.edu.vn"
-email_list = ["masayukibalad@gmail.com"]
-pswd = 'fzkg nyoa oeaa wyis'
+email_from = "anhnvtse172362@fpt.edu.vn"
+email_list = ["ngovutuananh1110@gmail.com", 'trietnbse173607@fpt.edu.vn']
+pswd = 'wntt rpty reqq yjsl'
 subject = "WARNING"
 formatted_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
@@ -138,7 +138,7 @@ last_frame = None
 def update_last_frame():
     global last_frame
     q = queue.Queue()
-    url = 'rtsp://admin:Ditmemay1@192.168.1.173:554/onvif1'
+    # url = 'rtsp://admin:Ditmemay1@192.168.1.173:554/onvif1'
     cap = cv2.VideoCapture(url, cv2.CAP_FFMPEG)
 
     while True:
@@ -161,6 +161,9 @@ t.start()
 def reset_email_flag():  # reset flag =# to send email after 5 minutes
     global email_flag
     email_flag = 0
+
+
+classnames = ['Fire', 'Smoke']
 
 
 def predict_image(image_input):
@@ -215,9 +218,9 @@ def gen_frames():  # generate frame by frame from RTSP stream
                 print('prepare sending email')
                 send_warning_email(frame)
                 email_flag = 1 
-                timer = Timer(300, reset_email_flag)
-                timer.start
-                print(" passed sending email")
+                timer = Timer(5, reset_email_flag)
+                timer.start()
+                print("passed sending email")
             # else:
             #     print( 'con cac')            
 
@@ -248,8 +251,8 @@ def gen_frames_webcam():  # generate frame by frame from laptop webcam
         if is_detected == 1 and email_flag == 0:  # If a bounding box was detected
             send_warning_email(frame)
             email_flag = 1 
-            timer = Timer(300, reset_email_flag)
-            timer.start
+            timer = Timer(5, reset_email_flag)
+            timer.start()
             print(" passed sending email")
 
         ret, buffer = cv2.imencode('.jpg', frame)
@@ -282,4 +285,3 @@ def convert_video_for_web(input_path, output_path):
         print('Passed convert_video_for_web')
     except ffmpeg.Error as e:
         print(f"Error when convert video: {e}")
-
