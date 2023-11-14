@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const fileInput = document.getElementById("fileInput");
     const inputContainer = document.getElementById("image-container-Ori");
     const outputContainer = document.getElementById("image-container-Gra");
+    const loader = document.getElementById("loader")
 
     dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
@@ -40,6 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (inputData) {
             inputContainer.removeChild(inputData);
         }
+        el.style.width = "300px"
+        el.style.height = "200px"
         inputContainer.appendChild(el);
         inputData1.scrollIntoView({block :'center'});
     }
@@ -56,15 +59,24 @@ document.addEventListener("DOMContentLoaded", function () {
             outputEl.type = "video/mp4"
         }
         outputEl.src = filename
+        outputEl.style.width = "300px"
+        outputEl.style.height = "200px"
         outputContainer.appendChild(outputEl)
     }
 
     function sendDataToModel(file, type = "image") {
+        let existEl = document.getElementById("output-el")
+        if (existEl) {
+            outputContainer.removeChild(existEl)
+        }
         let url
         let fetchObj = {
             method: "POST"
         }
         const formData = new FormData();
+
+        loader.style.display = "block";
+
         formData.append('data', file);
         if (type == "image") {
             url = "/process-image"
@@ -79,8 +91,15 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 let filename = data.filename
                 console.log('du ma chay gium', data)
+                loader.style.display = "none"
                 renderOutput(filename, type)
             })
+            .catch(error => {
+                console.error('Error during processing', error);
+
+                // Hide the loader in case of an error
+                loader.style.display = 'none';
+            });
     }
 
 
@@ -90,6 +109,10 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
         let file = files[0];
+        let inputData = document.getElementById("inputDataEl");
+        if (inputData) {
+            inputContainer.removeChild(inputData);
+        }
         if (file.type.startsWith('image/')) {
             displayImage(file);
             sendDataToModel(file, "image");
