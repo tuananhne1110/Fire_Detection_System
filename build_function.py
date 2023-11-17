@@ -32,8 +32,7 @@ formatted_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 FOLDER_NOW_PATH = './uploads'
 model = YOLO("./best.pt")
 os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
-url = 'rtsp://admin:Ditmemay1@192.168.1.173:554/onvif1'
-
+url = 'rtsp://admin:Ditmemay1@172.20.10.6:554/onvif1'
 
 class ImageProcessor:
     def __init__(self, file):
@@ -218,7 +217,7 @@ def gen_frames():  # generate frame by frame from RTSP stream
                 print('prepare sending email')
                 send_warning_email(frame)
                 email_flag = 1 
-                timer = Timer(5, reset_email_flag)
+                timer = Timer(60, reset_email_flag)
                 timer.start()
                 print("passed sending email")
             # else:
@@ -251,7 +250,7 @@ def gen_frames_webcam():  # generate frame by frame from laptop webcam
         if is_detected == 1 and email_flag == 0:  # If a bounding box was detected
             send_warning_email(frame)
             email_flag = 1 
-            timer = Timer(5, reset_email_flag)
+            timer = Timer(60, reset_email_flag)
             timer.start()
             print(" passed sending email")
 
