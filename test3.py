@@ -44,3 +44,27 @@ output_path = '/enhanced_image.png'
 cv2.imwrite(output_path, final_image)
 
 output_path
+
+def enhance_hsv(image, lower_bound1=(0, 43, 46), upper_bound1=(10, 255, 255),
+                         lower_bound2=(170, 43, 46), upper_bound2=(179, 255, 255),
+                         weight_original=0.7, weight_heatmap=0.3):
+    # Convert RGB image to HSV
+    hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+
+    # Create binary masks for both sets of boundaries
+    mask1 = cv2.inRange(hsv_image, np.array(lower_bound1), np.array(upper_bound1))
+    mask2 = cv2.inRange(hsv_image, np.array(lower_bound2), np.array(upper_bound2))
+
+    # Combine masks using bitwise OR operation
+    combined_mask = cv2.bitwise_or(mask1, mask2)
+
+    # Convert binary mask to heatmap
+    heatmap = cv2.applyColorMap(combined_mask, cv2.COLORMAP_HOT)
+
+    # Convert heatmap to BGR for weighted addition
+    heatmap_bgr = cv2.cvtColor(heatmap, cv2.COLOR_RGB2BGR)
+
+    # Weighted addition of original image and heatmap
+    enhanced_image = cv2.addWeighted(image, weight_original, heatmap_bgr, weight_heatmap, 0)
+
+    return enhanced_image
